@@ -1,0 +1,53 @@
+name:                featherweight-go-gen
+version:             0.1.0.0
+github:              "wenkokke/featherweight-go-gen"
+license-file:        LICENSE
+author:              "Wen Kokke"
+maintainer:          "wen.kokke@ed.ac.uk"
+copyright:           "2019 Wen Kokke"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+description: Please see the README on GitHub at <https://github.com/githubuser/featherweight-go-gen#readme>
+
+dependencies:
+- base           >= 4.7 && < 5
+- containers     >= 0.6.0.1
+- lazy-search    >= 0.1.1.0
+- microlens
+- microlens-th
+- size-based     >= 0.1.2.0
+- testing-feat   >= 1.1.0.0
+- text           >= 1.2.3.1
+- temporary      >= 1.3
+- process        >= 1.6.5.0
+- indexed        >= 0.1.3 && < 0.2
+- indexed-extras >= 0.2 && < 0.3
+
+executable:
+  main: Main.hs
+  source-dirs: app
+  dependencies:
+    - featherweight-go-gen
+
+library:
+  source-dirs: src
+  exposed-modules:
+    - Language.FGG.Common
+    - Language.FGG.DeBruijn
+    - Language.FGG.DeBruijn.ToNamed
+    - Language.FGG.Named
+
+tests:
+  featherweight-go-gen-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    - -fno-warn-partial-type-signatures
+    dependencies:
+    - featherweight-go-gen
