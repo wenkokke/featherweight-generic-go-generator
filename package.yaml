@@ -4,7 +4,7 @@ github:              "wenkokke/featherweight-go-gen"
 license-file:        LICENSE
 author:              "Wen Kokke"
 maintainer:          "wen.kokke@ed.ac.uk"
-copyright:           "2019 Wen Kokke"
+copyright:           "Copyright (c) 2019--2020 Wen Kokke"
 
 extra-source-files:
 - README.md
