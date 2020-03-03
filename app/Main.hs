@@ -31,10 +31,10 @@ fgg fp = do
               & unlines
   return (exitCode, stdout', stderr)
 
-allProgs :: [DB.Prog]
+allProgs :: [DB.Prog ()]
 allProgs = concatMap snd (take 30 values)
 
-wellTypedProgs :: IO [DB.Prog]
+wellTypedProgs :: IO [DB.Prog ()]
 wellTypedProgs = search 30 DB.checkProg
 
 main :: IO ()

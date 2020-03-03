@@ -24,185 +24,194 @@ import Language.FGG.Common
 
 -- ** Programs
 
-newtype Prog
-  = FDecls (FDecls Z)
+data Prog ann
+  = FDecls ann (FDecls ann Z)
   deriving (Typeable)
 
-instance Enumerable Prog where
+instance Enumerable (Prog ()) where
   enumerate = share $ aconcat
-    [ c1 FDecls
+    [ c1 $ FDecls ()
     ]
 
 
-data FDecls f
-  = NewF (FDecls (S f))
-  | MDecls (MDecls f Z)
+data FDecls ann f
+  = NewF ann (FDecls ann (S f))
+  | MDecls ann (MDecls ann f Z)
   deriving (Typeable)
 
 instance ( Enumerable f
-         ) => Enumerable (FDecls f) where
+         ) => Enumerable (FDecls () f) where
   enumerate = share $ aconcat
-    [ pay . c1 $ NewF
-    , c1 MDecls
+    [ pay . c1 $ NewF ()
+    , c1 $ MDecls ()
     ]
 
 
-data MDecls f m
-  = NewM (MDecls f (S m))
-  | TyDecls (TyDecls Z Z f m)
+data MDecls ann f m
+  = NewM ann (MDecls ann f (S m))
+  | TyDecls ann (TyDecls ann Z Z f m)
   deriving (Typeable)
 
 instance ( Enumerable f
          , Enumerable m
-         ) => Enumerable (MDecls f m) where
+         ) => Enumerable (MDecls () f m) where
   enumerate = share $ aconcat
-    [ pay . c1 $ NewM
-    , c1 TyDecls
+    [ pay . c1 $ NewM ()
+    , c1 $ TyDecls ()
     ]
 
 
 
 -- ** Type declarations
 
-data TyDecls ts ti f m
+data TyDecls ann ts ti f m
   = forall a n.
     (Fin a) =>
     LetStruct
+    ann
     (Vec (Type Z ts ti) a)        -- ^ The bounds of the parameters
     (Vec (f, Type a ts ti) n)     -- ^ Field types
-    (TyDecls (S ts) ti f m)
+    (TyDecls ann (S ts) ti f m)
   | forall a n p.
     (Fin a) =>
     LetInterface
+    ann
     (Vec (Type Z ts ti) a)        -- ^ The bounds of the type parameters
     (Vec (Type a ts ti) p)        -- ^ Parent interfaces
     (Vec (m, MSig a ts (S ti)) n) -- ^ Method signatures
-    (TyDecls ts (S ti) f m)
-  | TmDecls (TmDecls ts ti f m)
+    (TyDecls ann ts (S ti) f m)
+  | TmDecls ann (TmDecls ann ts ti f m)
   deriving (Typeable)
 
 instance ( Enumerable ts
          , Enumerable ti
          , Enumerable f
          , Enumerable m
-         ) => Enumerable (TyDecls ts ti f m) where
+         ) => Enumerable (TyDecls () ts ti f m) where
   enumerate = share $ aconcat
     [ -- * Structures
-      pay . c3 $ LetStruct @ts @ti @f @m @Z         @Z
-    , pay . c3 $ LetStruct @ts @ti @f @m @(S Z)     @Z
-    , pay . c3 $ LetStruct @ts @ti @f @m @(S (S Z)) @Z
-    , pay . c3 $ LetStruct @ts @ti @f @m @Z         @(S Z)
-    , pay . c3 $ LetStruct @ts @ti @f @m @(S Z)     @(S Z)
-    , pay . c3 $ LetStruct @ts @ti @f @m @(S (S Z)) @(S Z)
-    , pay . c3 $ LetStruct @ts @ti @f @m @Z         @(S (S Z))
-    , pay . c3 $ LetStruct @ts @ti @f @m @(S Z)     @(S (S Z))
-    , pay . c3 $ LetStruct @ts @ti @f @m @(S (S Z)) @(S (S Z))
+      pay . c3 $ LetStruct @() @ts @ti @f @m @Z         @Z         ()
+    , pay . c3 $ LetStruct @() @ts @ti @f @m @(S Z)     @Z         ()
+    , pay . c3 $ LetStruct @() @ts @ti @f @m @(S (S Z)) @Z         ()
+    , pay . c3 $ LetStruct @() @ts @ti @f @m @Z         @(S Z)     ()
+    , pay . c3 $ LetStruct @() @ts @ti @f @m @(S Z)     @(S Z)     ()
+    , pay . c3 $ LetStruct @() @ts @ti @f @m @(S (S Z)) @(S Z)     ()
+    , pay . c3 $ LetStruct @() @ts @ti @f @m @Z         @(S (S Z)) ()
+    , pay . c3 $ LetStruct @() @ts @ti @f @m @(S Z)     @(S (S Z)) ()
+    , pay . c3 $ LetStruct @() @ts @ti @f @m @(S (S Z)) @(S (S Z)) ()
     , -- * Interfaces
-      pay . c4 $ LetInterface @ts @ti @f @m @Z         @Z         @Z
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S Z)     @Z         @Z
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S (S Z)) @Z         @Z
-    , pay . c4 $ LetInterface @ts @ti @f @m @Z         @(S Z)     @Z
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S Z)     @(S Z)     @Z
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S (S Z)) @(S Z)     @Z
-    , pay . c4 $ LetInterface @ts @ti @f @m @Z         @(S (S Z)) @Z
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S Z)     @(S (S Z)) @Z
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S (S Z)) @(S (S Z)) @Z
-    , pay . c4 $ LetInterface @ts @ti @f @m @Z         @Z         @(S Z)
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S Z)     @Z         @(S Z)
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S (S Z)) @Z         @(S Z)
-    , pay . c4 $ LetInterface @ts @ti @f @m @Z         @(S Z)     @(S Z)
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S Z)     @(S Z)     @(S Z)
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S (S Z)) @(S Z)     @(S Z)
-    , pay . c4 $ LetInterface @ts @ti @f @m @Z         @(S (S Z)) @(S Z)
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S Z)     @(S (S Z)) @(S Z)
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S (S Z)) @(S (S Z)) @(S Z)
-    , pay . c4 $ LetInterface @ts @ti @f @m @Z         @Z         @(S (S Z))
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S Z)     @Z         @(S (S Z))
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S (S Z)) @Z         @(S (S Z))
-    , pay . c4 $ LetInterface @ts @ti @f @m @Z         @(S Z)     @(S (S Z))
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S Z)     @(S Z)     @(S (S Z))
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S (S Z)) @(S Z)     @(S (S Z))
-    , pay . c4 $ LetInterface @ts @ti @f @m @Z         @(S (S Z)) @(S (S Z))
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S Z)     @(S (S Z)) @(S (S Z))
-    , pay . c4 $ LetInterface @ts @ti @f @m @(S (S Z)) @(S (S Z)) @(S (S Z))
-    , c1 TmDecls
+      pay . c4 $ LetInterface @() @ts @ti @f @m @Z         @Z         @Z         ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S Z)     @Z         @Z         ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S (S Z)) @Z         @Z         ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @Z         @(S Z)     @Z         ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S Z)     @(S Z)     @Z         ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S (S Z)) @(S Z)     @Z         ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @Z         @(S (S Z)) @Z         ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S Z)     @(S (S Z)) @Z         ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S (S Z)) @(S (S Z)) @Z         ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @Z         @Z         @(S Z)     ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S Z)     @Z         @(S Z)     ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S (S Z)) @Z         @(S Z)     ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @Z         @(S Z)     @(S Z)     ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S Z)     @(S Z)     @(S Z)     ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S (S Z)) @(S Z)     @(S Z)     ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @Z         @(S (S Z)) @(S Z)     ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S Z)     @(S (S Z)) @(S Z)     ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S (S Z)) @(S (S Z)) @(S Z)     ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @Z         @Z         @(S (S Z)) ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S Z)     @Z         @(S (S Z)) ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S (S Z)) @Z         @(S (S Z)) ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @Z         @(S Z)     @(S (S Z)) ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S Z)     @(S Z)     @(S (S Z)) ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S (S Z)) @(S Z)     @(S (S Z)) ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @Z         @(S (S Z)) @(S (S Z)) ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S Z)     @(S (S Z)) @(S (S Z)) ()
+    , pay . c4 $ LetInterface @() @ts @ti @f @m @(S (S Z)) @(S (S Z)) @(S (S Z)) ()
+    , c1 $ TmDecls ()
     ]
 
 
 
 -- ** Term declarations
 
-data TmDecls ts ti f m
+data TmDecls ann ts ti f m
   = forall a a' n.
     (Fin a', Fin a, Fin (a' :+ a)) =>
     LetMethod                            -- ^ Declaration of a method instance
+    ann
     (Vec (Type Z ts ti) a)               -- ^ The bounds of the type parameters
     ts                                   -- ^ The struct name
     m                                    -- ^ The method which is declared
     (Vec (Type a ts ti) a')              -- ^ The bounds of the type parameters
     (Vec (Type (a' :+ a) ts ti) n)       -- ^ The types of the arguments
     (Type (a' :+ a) ts ti)               -- ^ The return type
-    (Expr (a' :+ a) ts ti f m (S n))     -- ^ The method body
-    (TmDecls ts ti f m)
+    (Expr ann (a' :+ a) ts ti f m (S n)) -- ^ The method body
+    (TmDecls ann ts ti f m)
   | Main                                 -- ^ The main function
+    ann
     (Type Z ts ti)
-    (Expr Z ts ti f m Z)
+    (Expr ann Z ts ti f m Z)
   deriving (Typeable)
 
 instance ( Enumerable ts
          , Enumerable ti
          , Enumerable f
          , Enumerable m
-         ) => Enumerable (TmDecls ts ti f m) where
+         ) => Enumerable (TmDecls () ts ti f m) where
   enumerate = share $ aconcat
-    [ pay . c8 $ LetMethod @ts @ti @f @m @Z         @Z         @Z
-    , pay . c8 $ LetMethod @ts @ti @f @m @(S Z)     @Z         @Z
-    , pay . c8 $ LetMethod @ts @ti @f @m @(S (S Z)) @Z         @Z
-    , pay . c8 $ LetMethod @ts @ti @f @m @Z         @(S Z)     @Z
-    , pay . c8 $ LetMethod @ts @ti @f @m @(S Z)     @(S Z)     @Z
-    , pay . c8 $ LetMethod @ts @ti @f @m @Z         @(S (S Z)) @Z
-    , pay . c8 $ LetMethod @ts @ti @f @m @Z         @Z         @(S Z)
-    , pay . c8 $ LetMethod @ts @ti @f @m @(S Z)     @Z         @(S Z)
-    , pay . c8 $ LetMethod @ts @ti @f @m @(S (S Z)) @Z         @(S Z)
-    , pay . c8 $ LetMethod @ts @ti @f @m @Z         @(S Z)     @(S Z)
-    , pay . c8 $ LetMethod @ts @ti @f @m @(S Z)     @(S Z)     @(S Z)
-    , pay . c8 $ LetMethod @ts @ti @f @m @Z         @(S (S Z)) @(S Z)
-    , pay . c8 $ LetMethod @ts @ti @f @m @Z         @Z         @(S (S Z))
-    , pay . c8 $ LetMethod @ts @ti @f @m @(S Z)     @Z         @(S (S Z))
-    , pay . c8 $ LetMethod @ts @ti @f @m @(S (S Z)) @Z         @(S (S Z))
-    , pay . c8 $ LetMethod @ts @ti @f @m @Z         @(S Z)     @(S (S Z))
-    , pay . c8 $ LetMethod @ts @ti @f @m @(S Z)     @(S Z)     @(S (S Z))
-    , pay . c8 $ LetMethod @ts @ti @f @m @Z         @(S (S Z)) @(S (S Z))
-    , c2 Main
+    [ pay . c8 $ LetMethod @() @ts @ti @f @m @Z         @Z         @Z         ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @(S Z)     @Z         @Z         ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @(S (S Z)) @Z         @Z         ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @Z         @(S Z)     @Z         ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @(S Z)     @(S Z)     @Z         ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @Z         @(S (S Z)) @Z         ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @Z         @Z         @(S Z)     ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @(S Z)     @Z         @(S Z)     ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @(S (S Z)) @Z         @(S Z)     ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @Z         @(S Z)     @(S Z)     ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @(S Z)     @(S Z)     @(S Z)     ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @Z         @(S (S Z)) @(S Z)     ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @Z         @Z         @(S (S Z)) ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @(S Z)     @Z         @(S (S Z)) ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @(S (S Z)) @Z         @(S (S Z)) ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @Z         @(S Z)     @(S (S Z)) ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @(S Z)     @(S Z)     @(S (S Z)) ()
+    , pay . c8 $ LetMethod @() @ts @ti @f @m @Z         @(S (S Z)) @(S (S Z)) ()
+    , c2 $ Main ()
     ]
 
 
 
 -- ** Expressions
 
-data Expr a ts ti f m x
+data Expr ann a ts ti f m x
   = Var
-    x                                           -- ^ Variable name
+    ann
+    x                                               -- ^ Variable name
   | forall n1 n2.
     Struct
-    ts                                          -- ^ Struct name
-    (Vec (Type a ts ti) n1)                     -- ^ Type parameters
-    (Vec (Expr a ts ti f m x, Type a ts ti) n2) -- ^ Struct arguments
+    ann
+    ts                                              -- ^ Struct name
+    (Vec (Type a ts ti) n1)                         -- ^ Type parameters
+    (Vec (Expr ann a ts ti f m x, Type a ts ti) n2) -- ^ Struct arguments
   | Select
-    (Expr a ts ti f m x)                        -- ^ Struct
-    (Type a ts ti)                              -- ^ Struct type
-    f                                           -- ^ Field name
+    ann
+    (Expr ann a ts ti f m x)                        -- ^ Struct
+    (Type a ts ti)                                  -- ^ Struct type
+    f                                               -- ^ Field name
   | forall n1 n2.
     Call
-    (Expr a ts ti f m x)                        -- ^ Object
-    (Type a ts ti)                              -- ^ Object type
-    m                                           -- ^ Method name
-    (Vec (Type a ts ti) n1)                     -- ^ Type parameters
-    (Vec (Expr a ts ti f m x, Type a ts ti) n2) -- ^ Method arguments
+    ann
+    (Expr ann a ts ti f m x)                        -- ^ Object
+    (Type a ts ti)                                  -- ^ Object type
+    m                                               -- ^ Method name
+    (Vec (Type a ts ti) n1)                         -- ^ Type parameters
+    (Vec (Expr ann a ts ti f m x, Type a ts ti) n2) -- ^ Method arguments
   | Assert
-    (Expr a ts ti f m x)                        -- ^ Expression
-    (Type a ts ti)                              -- ^ Expression type
-    (Type a ts ti)                              -- ^ Asserted type
+    ann
+    (Expr ann a ts ti f m x)                        -- ^ Expression
+    (Type a ts ti)                                  -- ^ Expression type
+    (Type a ts ti)                                  -- ^ Asserted type
   deriving (Typeable)
 
 instance ( Enumerable a
@@ -211,29 +220,29 @@ instance ( Enumerable a
          , Enumerable f
          , Enumerable m
          , Enumerable x
-         ) => Enumerable (Expr a ts ti f m x) where
+         ) => Enumerable (Expr () a ts ti f m x) where
   enumerate = share $ aconcat
-    [ pay . c1 $ Var
-    , pay . c3 $ Struct @a @ts @ti @f @m @x @Z         @Z
-    , pay . c3 $ Struct @a @ts @ti @f @m @x @(S Z)     @Z
-    , pay . c3 $ Struct @a @ts @ti @f @m @x @(S (S Z)) @Z
-    , pay . c3 $ Struct @a @ts @ti @f @m @x @Z         @(S Z)
-    , pay . c3 $ Struct @a @ts @ti @f @m @x @(S Z)     @(S Z)
-    , pay . c3 $ Struct @a @ts @ti @f @m @x @(S (S Z)) @(S Z)
-    , pay . c3 $ Struct @a @ts @ti @f @m @x @Z         @(S (S Z))
-    , pay . c3 $ Struct @a @ts @ti @f @m @x @(S Z)     @(S (S Z))
-    , pay . c3 $ Struct @a @ts @ti @f @m @x @(S (S Z)) @(S (S Z))
-    , pay . c3 $ Select
-    , pay . c5 $ Call @a @ts @ti @f @m @x @Z         @Z
-    , pay . c5 $ Call @a @ts @ti @f @m @x @(S Z)     @Z
-    , pay . c5 $ Call @a @ts @ti @f @m @x @(S (S Z)) @Z
-    , pay . c5 $ Call @a @ts @ti @f @m @x @Z         @(S Z)
-    , pay . c5 $ Call @a @ts @ti @f @m @x @(S Z)     @(S Z)
-    , pay . c5 $ Call @a @ts @ti @f @m @x @(S (S Z)) @(S Z)
-    , pay . c5 $ Call @a @ts @ti @f @m @x @Z         @(S (S Z))
-    , pay . c5 $ Call @a @ts @ti @f @m @x @(S Z)     @(S (S Z))
-    , pay . c5 $ Call @a @ts @ti @f @m @x @(S (S Z)) @(S (S Z))
-    , pay . c3 $ Assert
+    [ pay . c1 $ Var ()
+    , pay . c3 $ Struct @() @a @ts @ti @f @m @x @Z         @Z         ()
+    , pay . c3 $ Struct @() @a @ts @ti @f @m @x @(S Z)     @Z         ()
+    , pay . c3 $ Struct @() @a @ts @ti @f @m @x @(S (S Z)) @Z         ()
+    , pay . c3 $ Struct @() @a @ts @ti @f @m @x @Z         @(S Z)     ()
+    , pay . c3 $ Struct @() @a @ts @ti @f @m @x @(S Z)     @(S Z)     ()
+    , pay . c3 $ Struct @() @a @ts @ti @f @m @x @(S (S Z)) @(S Z)     ()
+    , pay . c3 $ Struct @() @a @ts @ti @f @m @x @Z         @(S (S Z)) ()
+    , pay . c3 $ Struct @() @a @ts @ti @f @m @x @(S Z)     @(S (S Z)) ()
+    , pay . c3 $ Struct @() @a @ts @ti @f @m @x @(S (S Z)) @(S (S Z)) ()
+    , pay . c3 $ Select ()
+    , pay . c5 $ Call @() @a @ts @ti @f @m @x @Z         @Z         ()
+    , pay . c5 $ Call @() @a @ts @ti @f @m @x @(S Z)     @Z         ()
+    , pay . c5 $ Call @() @a @ts @ti @f @m @x @(S (S Z)) @Z         ()
+    , pay . c5 $ Call @() @a @ts @ti @f @m @x @Z         @(S Z)     ()
+    , pay . c5 $ Call @() @a @ts @ti @f @m @x @(S Z)     @(S Z)     ()
+    , pay . c5 $ Call @() @a @ts @ti @f @m @x @(S (S Z)) @(S Z)     ()
+    , pay . c5 $ Call @() @a @ts @ti @f @m @x @Z         @(S (S Z)) ()
+    , pay . c5 $ Call @() @a @ts @ti @f @m @x @(S Z)     @(S (S Z)) ()
+    , pay . c5 $ Call @() @a @ts @ti @f @m @x @(S (S Z)) @(S (S Z)) ()
+    , pay . c3 $ Assert ()
     ]
 
 
@@ -241,10 +250,13 @@ instance ( Enumerable a
 -- ** Types
 
 data Type a ts ti
-  = Par a
+  = Par
+    a
   | forall a'.
     (Fin a') =>
-    Con (TyCon ts ti) (Vec (Type a ts ti) a')
+    Con
+    (TyCon ts ti)
+    (Vec (Type a ts ti) a')
   deriving (Typeable)
 
 deriving instance (Show a, Show ts, Show ti) => Show (Type a ts ti)
@@ -275,7 +287,7 @@ instance ( Enumerable ts
     ]
 
 instance Bifunctor (Type a) where
-  bimap _ _ (Par a) = Par a
+  bimap _ _ (Par a)       = Par a
   bimap f g (Con tc args) = Con (bimap f g tc) (vmap (bimap f g) args)
 
 -- |Map over the parameter argument of types.
@@ -322,7 +334,7 @@ data MSig a ts ti
     (Fin a, Fin (a' :+ a)) =>
     MSig
     (Vec (Type a ts ti) a')        -- ^ Type parameter bounds
-    (TyCon ts ti)                  -- ^ Object type
+    (TyCon ts ti)                      -- ^ Object type
     (Vec (Type (a' :+ a) ts ti) n) -- ^ Arguments types
     (Type (a' :+ a) ts ti)         -- ^ Return type
   deriving (Typeable)
@@ -424,21 +436,21 @@ raiseSubst (S a') s (FS i) = mapPar FS (raiseSubst a' s i)
 
 
 -- |Simultaneous substitutions for type parameters in expressions.
-substExpr :: (a -> Type b ts ti) -> Expr a ts ti f m x -> Expr b ts ti f m x
+substExpr :: (a -> Type b ts ti) -> Expr ann a ts ti f m x -> Expr ann b ts ti f m x
 substExpr s = go1
   where
     go2
       = substType s
-    go1 (Var x)
-      = Var x
-    go1 (Struct ts tyArgs args)
-      = Struct ts (vmap go2 tyArgs) (vmap (bimap go1 go2) args)
-    go1 (Select obj objTy f)
-      = Select (go1 obj) (go2 objTy) f
-    go1 (Call obj objTy m tyArgs args)
-      = Call (go1 obj) (go2 objTy) m (vmap go2 tyArgs) (vmap (bimap go1 go2) args)
-    go1 (Assert obj objTy assTy)
-      = Assert (go1 obj) (go2 objTy) (go2 assTy)
+    go1 (Var ann x)
+      = Var ann x
+    go1 (Struct ann ts tyArgs args)
+      = Struct ann ts (vmap go2 tyArgs) (vmap (bimap go1 go2) args)
+    go1 (Select ann obj objTy f)
+      = Select ann (go1 obj) (go2 objTy) f
+    go1 (Call ann obj objTy m tyArgs args)
+      = Call ann (go1 obj) (go2 objTy) m (vmap go2 tyArgs) (vmap (bimap go1 go2) args)
+    go1 (Assert ann obj objTy assTy)
+      = Assert ann (go1 obj) (go2 objTy) (go2 assTy)
 
 
 -- * Extension to the combinators from Control.Enumerable

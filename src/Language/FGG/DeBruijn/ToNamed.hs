@@ -26,26 +26,27 @@ import qualified Language.FGG.DeBruijn.Base as DB
 
 
 -- |Convert enumerable programs to named programs.
-convProg :: DB.Prog -> N.Prog
-convProg (DB.FDecls fds) = N.Prog decls main
+convProg :: DB.Prog ann
+         -> N.Prog
+convProg (DB.FDecls _ fds) = N.Prog decls main
   where
     (decls, main) = convFDecls (emptyNS "f") fds
 
-    convFDecls :: (NS f) -> DB.FDecls f -> ([N.Decl], N.Expr)
-    convFDecls nsf (DB.NewF fds) = convFDecls (extendNS nsf) fds
-    convFDecls nsf (DB.MDecls mds) = convMDecls (nsf, emptyNS "m") mds
+    convFDecls :: NS f -> DB.FDecls ann f -> ([N.Decl], N.Expr)
+    convFDecls nsf (DB.NewF _ fds) = convFDecls (extendNS nsf) fds
+    convFDecls nsf (DB.MDecls _ mds) = convMDecls (nsf, emptyNS "m") mds
 
-    convMDecls :: (Ord m) => (NS f, NS m) -> DB.MDecls f m -> ([N.Decl], N.Expr)
-    convMDecls (nsf, nsm) (DB.NewM mds) = convMDecls (nsf, extendNS nsm) mds
-    convMDecls (nsf, nsm) (DB.TyDecls tys) = convTyDecls (M.empty, emptyNS "ts", emptyNS "ti", nsf, nsm) tys
+    convMDecls :: (Ord m) => (NS f, NS m) -> DB.MDecls ann f m -> ([N.Decl], N.Expr)
+    convMDecls (nsf, nsm) (DB.NewM _ mds) = convMDecls (nsf, extendNS nsm) mds
+    convMDecls (nsf, nsm) (DB.TyDecls _ tys) = convTyDecls (M.empty, emptyNS "ts", emptyNS "ti", nsf, nsm) tys
 
 
 -- |Convert enumerable type declarations to a list of declarations and the body of the main function.
 convTyDecls :: (Ord ts, Ord m)
             => (Map (ts, m) N.Sig, NS ts, NS ti, NS f, NS m)
-            -> DB.TyDecls ts ti f m
+            -> DB.TyDecls ann ts ti f m
             -> ([N.Decl], N.Expr)
-convTyDecls (sigs, nsts, nsti, nsf, nsm) (DB.LetStruct parBnds fldNamesAndTys rest)
+convTyDecls (sigs, nsts, nsti, nsf, nsm) (DB.LetStruct _ parBnds fldNamesAndTys rest)
   = (decl' : decls', main')
   where
     nsa'  = freshNS "a" (vlength parBnds)
@@ -62,7 +63,7 @@ convTyDecls (sigs, nsts, nsti, nsf, nsm) (DB.LetStruct parBnds fldNamesAndTys re
         fldNamesAndTys' = [ (nameOf nsf f, convType (nsa', nsts, nsti) fldTy)
                           | (f, fldTy) <- vlist fldNamesAndTys ]
 
-convTyDecls (sigs, nsts, nsti, nsf, nsm) (DB.LetInterface parBnds parents methNamesAndSigs rest)
+convTyDecls (sigs, nsts, nsti, nsf, nsm) (DB.LetInterface _ parBnds parents methNamesAndSigs rest)
   = (decl' : decls', main')
   where
     nsa'  = freshNS "a" (vlength parBnds)
@@ -80,16 +81,16 @@ convTyDecls (sigs, nsts, nsti, nsf, nsm) (DB.LetInterface parBnds parents methNa
         fldNamesAndTys' = [ convMSig (nsa', nsts, nsti', nsm) (m, methSig)
                           | (m, methSig) <- vlist methNamesAndSigs ]
 
-convTyDecls nss (DB.TmDecls rest) = convTmDecls nss rest
+convTyDecls nss (DB.TmDecls _ rest) = convTmDecls nss rest
 
 
 
 -- |Convert enumerable term declarations to a list of declarations and the body of the main function.
 convTmDecls :: (Ord ts, Ord m)
             => (Map (ts, m) N.Sig, NS ts, NS ti, NS f, NS m)
-            -> DB.TmDecls ts ti f m
+            -> DB.TmDecls ann ts ti f m
             -> ([N.Decl], N.Expr)
-convTmDecls (sigs, nsts, nsti, nsf, nsm) (DB.LetMethod objParBnds ts m methParBnds argTys retTy body rest)
+convTmDecls (sigs, nsts, nsti, nsf, nsm) (DB.LetMethod _ objParBnds ts m methParBnds argTys retTy body rest)
   = (decl' : rest', main')
   where
     nsa'  = freshNS "a" (vlength objParBnds)
@@ -107,32 +108,36 @@ convTmDecls (sigs, nsts, nsti, nsf, nsm) (DB.LetMethod objParBnds ts m methParBn
 
     decl' = N.LetMethod ("this", nameOf nsts ts) objParBnds' sig' body'
 
-convTmDecls (_, nsts, nsti, nsf, nsm) (DB.Main _ main) = ([], main')
+convTmDecls (_, nsts, nsti, nsf, nsm) (DB.Main _ _ main) = ([], main')
   where
     main' = convExpr (emptyNS "a", nsts, nsti, nsf, nsm, emptyNS "a") main
 
 
 -- |Convert enumerable expressions to named expressions.
-convExpr :: (NS a, NS ts, NS ti, NS f, NS m, NS x) -> DB.Expr a ts ti f m x -> N.Expr
+convExpr :: (NS a, NS ts, NS ti, NS f, NS m, NS x)
+         -> DB.Expr ann a ts ti f m x
+         -> N.Expr
 convExpr (nsa, nsts, nsti, nsf, nsm, nsx) = goEx
   where
     goTy = convType (nsa, nsts, nsti)
 
-    goEx (DB.Var x)
+    goEx (DB.Var _ x)
       = N.Var (nameOf nsx x)
-    goEx (DB.Struct ts tyArgs args)
+    goEx (DB.Struct _ ts tyArgs args)
       = N.Struct (nameOf nsts ts) (goTy <$> vlist tyArgs) (goEx . fst <$> vlist args)
-    goEx (DB.Select str _ fld)
+    goEx (DB.Select _ str _ fld)
       = N.Select (goEx str) (nameOf nsf fld)
-    goEx (DB.Call obj _ m tyArgs args)
+    goEx (DB.Call _ obj _ m tyArgs args)
       = N.Call (goEx obj) (nameOf nsm m) (goTy <$> vlist tyArgs) (goEx . fst <$> vlist args)
-    goEx (DB.Assert e _ ty)
+    goEx (DB.Assert _ e _ ty)
       = N.Assert (goEx e) (goTy ty)
 
 
 -- |Convert enumerable type signatures to named type signatures.
-convMSig :: forall a ts ti m. (NS a, NS ts, NS ti, NS m) -> (m, DB.MSig a ts ti) -> N.Sig
-convMSig (nsa, nsts, nsti, nsm) (m, (DB.MSig methParBnds _ argTys retTy))
+convMSig :: (NS a, NS ts, NS ti, NS m)
+         -> (m, DB.MSig a ts ti)
+         -> N.Sig
+convMSig (nsa, nsts, nsti, nsm) (m, DB.MSig methParBnds _ argTys retTy)
   = N.Sig m' methParBnds' argTys' retTy'
   where
     nsa'         = extendNS' (vlength methParBnds) nsa
@@ -147,7 +152,9 @@ convMSig (nsa, nsts, nsti, nsm) (m, (DB.MSig methParBnds _ argTys retTy))
 
 
 -- |Convert enumerable types to named types.
-convType :: (NS a, NS ts, NS ti) -> DB.Type a ts ti -> N.Type
+convType :: (NS a, NS ts, NS ti)
+         -> DB.Type a ts ti
+         -> N.Type
 convType (nsa, _   , _   ) (DB.Par a)
   = N.Par (nameOf nsa a)
 convType nss@(_  , nsts, nsti) (DB.Con tc tyArgs)

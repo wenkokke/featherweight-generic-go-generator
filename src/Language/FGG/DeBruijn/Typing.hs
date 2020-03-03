@@ -61,13 +61,19 @@ data TCS ts ti f m = (Fin ts, Fin ti, Fin f, Fin m) => TCS
 
 
 -- |Retrieve the method set for any type constructor.
-methSet :: forall ts ti f m. TCS ts ti f m -> TyCon ts ti -> Set m
+methSet :: forall ts ti f m.
+           TCS ts ti f m
+        -> TyCon ts ti
+        -> Set m
 methSet TCS{..} (TyS ts) = methSetS ts
 methSet TCS{..} (TyI ti) = methSetI ti
 
 
 -- |Retrieve the method signature for any type constructor.
-methSig :: forall ts ti f m. TCS ts ti f m -> (TyCon ts ti, m) -> Maybe (TySig MSig ts ti)
+methSig :: forall ts ti f m.
+           TCS ts ti f m
+        -> (TyCon ts ti, m)
+        -> Maybe (TySig MSig ts ti)
 methSig TCS{..} (TyS ts, m) = M.lookup (ts, m) methSigsS
 methSig TCS{..} (TyI ti, m) = M.lookup (ti, m) methSigsI
 
@@ -82,20 +88,29 @@ tyParBnds TCS{..} (TyI ti) k = case intSig ti of TySig parBnds _ -> k parBnds
 
 
 -- |Type check programs.
-checkProg :: Prog -> Cool
-checkProg (FDecls fds) = checkFDecls Z fds
+checkProg :: (Show ann) => Prog ann -> Cool
+checkProg (FDecls ann fds) = checkFDecls Z fds
 
 
 -- |Type check field name declarations.
-checkFDecls :: (Fin f) => Nat f -> FDecls f -> Cool
-checkFDecls fldNum (NewF fds) = checkFDecls (S fldNum) fds
-checkFDecls fldNum (MDecls mds) = checkMDecls fldNum Z mds
+checkFDecls :: forall ann f.
+               (Show ann, Fin f)
+            => Nat f
+            -> FDecls ann f
+            -> Cool
+checkFDecls fldNum (NewF ann fds) = checkFDecls (S fldNum) fds
+checkFDecls fldNum (MDecls ann mds) = checkMDecls fldNum Z mds
 
 
 -- |Type check method name declarations.
-checkMDecls :: (Fin f, Fin m) => Nat f -> Nat m -> MDecls f m -> Cool
-checkMDecls fldNum methNum (NewM mds) = checkMDecls fldNum (S methNum) mds
-checkMDecls fldNum methNum (TyDecls tys) = checkTyDecls tcs tys
+checkMDecls :: forall ann f m.
+               (Show ann, Fin f, Fin m)
+            => Nat f
+            -> Nat m
+            -> MDecls ann f m
+            -> Cool
+checkMDecls fldNum methNum (NewM ann mds) = checkMDecls fldNum (S methNum) mds
+checkMDecls fldNum methNum (TyDecls ann tys) = checkTyDecls tcs tys
   where
     tcs = TCS
       { methSigsI = M.empty
@@ -111,8 +126,12 @@ checkMDecls fldNum methNum (TyDecls tys) = checkTyDecls tcs tys
 
 
 -- |Type check type declarations.
-checkTyDecls :: forall ts ti f m. TCS ts ti f m -> TyDecls ts ti f m -> Cool
-checkTyDecls tcs@TCS{..} (LetStruct (parBnds :: Vec _ a) fldsAndTys rest)
+checkTyDecls :: forall ann ts ti f m.
+                (Show ann)
+             => TCS ts ti f m
+             -> TyDecls ann ts ti f m
+             -> Cool
+checkTyDecls tcs@TCS{..} (LetStruct ann (parBnds :: Vec _ a) fldsAndTys rest)
   = fldsUniq &&& fldTysOk &&& parBndsOk &&& checkTyDecls tcs' rest
   where
     fldsUniq :: Bool
@@ -162,7 +181,7 @@ checkTyDecls tcs@TCS{..} (LetStruct (parBnds :: Vec _ a) fldsAndTys rest)
     fldTysOk = warn "checkTyDecls.fldTysOk"
              $ vall (checkType tcs parBnds Nil) (vmap snd fldsAndTys)
 
-checkTyDecls tcs@TCS{..} (LetInterface (parBnds :: Vec _ a) parents methNamesAndSigs rest)
+checkTyDecls tcs@TCS{..} (LetInterface ann (parBnds :: Vec _ a) parents methNamesAndSigs rest)
   = methsUniq &&& parBndsOk &&& isJust parentMethSigsI !&& methSigsOk &&& checkTyDecls tcs' rest
   where
     methsUniq :: Bool
@@ -214,18 +233,13 @@ checkTyDecls tcs@TCS{..} (LetInterface (parBnds :: Vec _ a) parents methNamesAnd
     methSigsOk = warn "checkTyDecls.methSigsOk"
                $ vall (checkMSig tcs' parBnds') (vmap snd methNamesAndSigs)
 
-checkTyDecls tcs@TCS{..} (TmDecls rest)
+checkTyDecls tcs@TCS{..} (TmDecls ann rest)
   | S.null fldUndef = checkTmDecls tcs rest
   | otherwise       = false
 
 
 -- |Type check method signatures.
-checkMSig :: forall a ts ti f m.
-             (Fin a)
-          => TCS ts ti f m
-          -> Vec (Type Z ts ti) a
-          -> MSig a ts ti
-          -> Bool
+checkMSig :: forall a ts ti f m. (Fin a) => TCS ts ti f m -> Vec (Type Z ts ti) a -> MSig a ts ti -> Bool
 checkMSig tcs@TCS{..} objParBnds (MSig (methParBnds :: Vec _ a') _objTy argTys retTy) =
   methParBndsOk && argAndRetTysOk
   where
@@ -239,9 +253,9 @@ checkMSig tcs@TCS{..} objParBnds (MSig (methParBnds :: Vec _ a') _objTy argTys r
                    $ vall (checkType tcs objParBnds methParBnds) (Cons retTy argTys)
 
 -- |Type check method declarations.
-checkTmDecls :: forall ts ti f m. TCS ts ti f m -> TmDecls ts ti f m -> Cool
+checkTmDecls :: forall ann ts ti f m. (Show ann) => TCS ts ti f m -> TmDecls ann ts ti f m -> Cool
 checkTmDecls tcs@TCS{..}
-  (LetMethod (objParBnds :: Vec _ a) objTy m (methParBnds :: Vec _ a') (argTys :: Vec _ n) retTy body rest)
+  (LetMethod ann (objParBnds :: Vec _ a) objTy m (methParBnds :: Vec _ a') (argTys :: Vec _ n) retTy body rest)
   = methUniq &&& objParBndsOk &&& methParBndsOk &&& bodyOk &&& restOk
   where
     methUniq :: Bool
@@ -284,34 +298,34 @@ checkTmDecls tcs@TCS{..}
 
     restOk = checkTmDecls tcs' rest
 
-checkTmDecls tcs@TCS{..} (Main retTy body)
+checkTmDecls tcs@TCS{..} (Main ann retTy body)
   | S.null methUndef = checkExpr tcs Nil Nil fromZ retTy body
   | otherwise        = warn "checkTmDecls.methUndef" false
 
 
 
 -- |Type check expressions.
-checkExpr :: forall a' a ts ti f m x.
-             (Fin a', Fin a, Fin (a' :+ a))
+checkExpr :: forall ann a' a ts ti f m x.
+             (Show ann, Fin a', Fin a, Fin (a' :+ a))
           => TCS ts ti f m
           -> Vec (Type Z ts ti) a
           -> Vec (Type a ts ti) a'
           -> (x -> Type (a' :+ a) ts ti)
           -> Type (a' :+ a) ts ti
-          -> Expr (a' :+ a) ts ti f m x
+          -> Expr ann (a' :+ a) ts ti f m x
           -> Cool
 checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
   where
     go :: Type (a' :+ a) ts ti
-       -> Expr (a' :+ a) ts ti f m x
+       -> Expr ann (a' :+ a) ts ti f m x
        -> Cool
 
     -- Case: Variables
-    go ty (Var x)
+    go ty (Var ann x)
       = toCool (ty == tyEnv x)
 
     -- Case: Struct Literals
-    go ty (Struct ts tyArgs (argsAndTys :: Vec _ n2))
+    go ty (Struct ann ts tyArgs (argsAndTys :: Vec _ n2))
       = case strSig ts of
         TySig parBnds (SSig argTys) ->
           case ( vlength parBnds `decEq` vlength tyArgs
@@ -342,7 +356,7 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
                        $ vall' (\(arg, argTy) -> go argTy arg) argsAndTys
 
     -- Case: Select
-    go ty (Select obj objTy@(Con (TyS ts) tyArgs) f)
+    go ty (Select ann obj objTy@(Con (TyS ts) tyArgs) f)
       = case M.lookup (ts, f) fldSig of
         Nothing -> false
         Just (TySig parBnds' (FSig fldTy)) ->
@@ -360,7 +374,7 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
               objTyOk  = go objTy obj
 
     -- Case: Method Calls
-    go ty (Call obj objTy@(Con tc objTyArgs) m methTyArgs (argsAndTys :: Vec _ n))
+    go ty (Call ann obj objTy@(Con tc objTyArgs) m methTyArgs (argsAndTys :: Vec _ n))
       = case methSig tcs (tc, m) of
         Nothing -> false
         Just (TySig (objParBnds' :: Vec _ a1) (MSig (methParBnds' :: Vec _ a2) objTc argTys retTy)) ->
@@ -395,7 +409,7 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
               argsOk = warn "checkExpr.Call.argsOk"
                      $ vand' (vzip go argTys' args)
                 where
-                  args :: Vec (Expr (a' :+ a) ts ti f m x) n
+                  args :: Vec (Expr ann (a' :+ a) ts ti f m x) n
                   args = vmap fst argsAndTys
                   argTys' :: Vec (Type (a' :+ a) ts ti) n
                   argTys' = vmap (substType s) argTys
@@ -403,10 +417,10 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
               objOk = go objTy obj
 
     -- Case: Type Assertions
-    go ty@(Con (TyI _) _) (Assert obj objTy@(Con (TyI _) _) assTy)
+    go ty@(Con (TyI _) _) (Assert ann obj objTy@(Con (TyI _) _) assTy)
       | ty == assTy = go objTy obj
 
-    go ty@(Con (TyS _) _) (Assert obj objTy@(Con (TyI _) _) assTy)
+    go ty@(Con (TyS _) _) (Assert ann obj objTy@(Con (TyI _) _) assTy)
       | ty == assTy = assTyOk !&& go objTy obj
       where
         assTyOk = implements tcs objParBnds methParBnds assTy objTy

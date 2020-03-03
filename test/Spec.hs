@@ -5,48 +5,48 @@ import Language.FGG.DeBruijn
 import System.Exit (exitFailure)
 
 main :: IO ()
-main = do
+main =
   unless (toBool (checkProg bools)) exitFailure
 
-bools :: Prog
+bools :: Prog Int
 bools
-  = FDecls
-  $ MDecls
-  $ NewM
-  $ TyDecls
+  = FDecls 1
+  $ MDecls 2
+  $ NewM 3
+  $ TyDecls 4
   -- type TT struct {};
-  $ LetStruct Nil Nil
+  $ LetStruct 5 Nil Nil
   -- type FF struct {};
-  $ LetStruct Nil Nil
+  $ LetStruct 6 Nil Nil
   -- type Bool interface { Not() Bool };
-  $ LetInterface
+  $ LetInterface 7
     Nil
     Nil
     (Cons (FZ, MSig Nil (TyI FZ) Nil (Con (TyI FZ) Nil)) Nil)
-  $ TmDecls
+  $ TmDecls 8
   -- func (this TT) Not() { return FF };
-  $ LetMethod
+  $ LetMethod 9
     Nil
     FZ
     FZ
     Nil
     Nil
     (Con (TyS FZ) Nil)
-    (Struct (FS FZ) Nil Nil)
+    (Struct 10 (FS FZ) Nil Nil)
   -- func (this FF) Not() { return TT };
-  $ LetMethod
+  $ LetMethod 11
     Nil
     (FS FZ)
     FZ
     Nil
     Nil
     (Con (TyS (FS FZ)) Nil)
-    (Struct FZ Nil Nil)
+    (Struct 12 FZ Nil Nil)
   -- func main() { _ = TT.Not() };
-  $ Main
+  $ Main 13
   (Con (TyS FZ) Nil)
-  (Call
-    (Struct (FS FZ) Nil Nil)
+  (Call 14
+    (Struct 15 (FS FZ) Nil Nil)
     (Con (TyS (FS FZ)) Nil)
     FZ
     Nil
