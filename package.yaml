@@ -1,7 +1,7 @@
 name:                featherweight-go-gen
 version:             0.1.0.0
 github:              "wenkokke/featherweight-go-gen"
-license:             "PPL"
+license:             OtherLicense
 license-file:        LICENSE
 author:              "Wen Kokke"
 maintainer:          "wen.kokke@ed.ac.uk"

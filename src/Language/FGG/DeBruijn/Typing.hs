@@ -191,11 +191,11 @@ checkTyDecls' tcs@TCS{..} (LetStruct ann (parBnds :: Vec _ a) fldsAndTys rest)
   = fldsUniq &&& fldTysOk &&& parBndsOk &&& checkTyDecls tcs' rest
   where
     fldsUniq :: Bool
-    fldsUniq = warn ann "checkTyDecls'.fldsUniq"
+    fldsUniq = warn ann "checkTyDecls'.Struct.fldsUniq"
              $ allDifferent (vlist (vmap fst fldsAndTys))
 
     parBndsOk :: Bool
-    parBndsOk = warn ann "checkTyDecls'.parBndsOk"
+    parBndsOk = warn ann "checkTyDecls'.Struct.parBndsOk"
               $ vall isTyI parBnds && vall (checkType tcs Nil Nil) parBnds
 
     parBnds' :: Vec (Type Z (S ts) ti) a
@@ -242,15 +242,19 @@ checkTyDecls' tcs@TCS{..} (LetStruct ann (parBnds :: Vec _ a) fldsAndTys rest)
              $ vall (checkType tcs parBnds Nil) (vmap snd fldsAndTys)
 
 checkTyDecls' tcs@TCS{..} (LetInterface ann (parBnds :: Vec _ a) parents methNamesAndSigs rest)
-  = methsUniq &&& parBndsOk &&& isJust parentMethSigsI !&& methSigsOk &&& checkTyDecls tcs' rest
+  = methsUniq &&& parBndsOk &&& parentsOk !&& (methSigsOk &&& checkTyDecls tcs' rest)
   where
     methsUniq :: Bool
-    methsUniq = warn ann "checkTyDecls'.methsUniq"
+    methsUniq = warn ann "checkTyDecls'.Interface.methsUniq"
               $ allDifferent (vlist (vmap fst methNamesAndSigs))
 
     parBndsOk :: Bool
-    parBndsOk = warn ann "checkTyDecls'.parBndsOk"
+    parBndsOk = warn ann "checkTyDecls'.Interface.parBndsOk"
               $ vall isTyI parBnds && vall (checkType tcs Nil Nil) parBnds
+
+    parentsOk :: Bool
+    parentsOk = warn ann "checkTyDecls'.Interface.parentsOk"
+              $ isJust parentMethSigsI
 
     parBnds' :: Vec (Type Z ts (S ti)) a
     parBnds' = vmap (bimap id FS) parBnds
@@ -283,14 +287,11 @@ checkTyDecls' tcs@TCS{..} (LetInterface ann (parBnds :: Vec _ a) parents methNam
     intSig' FZ      = TySig (vmap (bimap id FS) parBnds) ISig
     intSig' (FS ti) = bimap id FS (intSig ti)
 
-    methUndef' :: Set m
-    methUndef' = S.difference methUndef (S.fromList (vlist (vmap fst methNamesAndSigs)))
-
     tcs' :: TCS ts (S ti) f m
     tcs' = TCS methSigsI' methSigsS'
                methSetI' methSetS
                fldSig' strSig' intSig'
-               methUndef' fldUndef
+               methUndef fldUndef
                emptyStrMax emptyIntMax
 
     methSigsOk :: Bool
@@ -626,8 +627,8 @@ implements tcs@TCS{..} objParBnds methParBnds = go
 
 
 
--- |Extend the method signature mapping with the methods  in a new interface,
--- inherited from parent interfaces.
+-- |Extend the method signature mapping with the methods in a new interface,
+--  inherited from parent interfaces.
 mkParentMethSigI :: forall a ts ti f m p.
                     (Fin a)
                  => TCS ts ti f m

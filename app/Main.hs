@@ -35,7 +35,7 @@ allProgs :: [DB.Prog ()]
 allProgs = concatMap snd (take 15 values)
 
 wellTypedProgs :: IO [DB.Prog ()]
-wellTypedProgs = search 15 (DB.checkProg' opts)
+wellTypedProgs = search' O 15 (DB.checkProg' opts)
   where
     opts = DB.TCSOpts
       { DB.optMethMin     = Just 1
