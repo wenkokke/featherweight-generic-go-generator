@@ -13,11 +13,7 @@
 {-# LANGUAGE TypeOperators         #-}
 {-# LANGUAGE TypeFamilies          #-}
 
-
-
 module Language.FGG.DeBruijn.Typing where
-
-
 
 import Data.Bifunctor
 import Data.Coolean
@@ -323,10 +319,14 @@ checkMSig ann tcs@TCS{..} objParBnds (MSig (methParBnds :: Vec _ a') _objTy argT
                    $ vall (checkType tcs objParBnds methParBnds) (Cons retTy argTys)
 
 -- |Check method declarations.
-checkTmDecls :: forall ann ts ti f m. (Show ann) => TCS ts ti f m -> TmDecls ann ts ti f m -> Cool
+checkTmDecls :: forall ann ts ti f m.
+                (Show ann)
+             => TCS ts ti f m
+             -> TmDecls ann ts ti f m
+             -> Cool
 checkTmDecls tcs@TCS{..}
   (LetMethod ann (objParBnds :: Vec _ a) objTy m (methParBnds :: Vec _ a') (argTys :: Vec _ n) retTy body rest)
-  = methUniq &&& objParBndsOk &&& methParBndsOk &&& bodyOk &&& restOk
+  = methUniq &&& objParBndsOk &&& methParBndsOk &&& objTyOk &&& argTysOk &&& retTyOk &&& bodyOk &&& restOk
   where
     methUniq :: Bool
     methUniq = warn ann "checkTmDecls.methUniq"
@@ -367,6 +367,15 @@ checkTmDecls tcs@TCS{..}
     tyEnv :: S n -> Type (a' :+ a) ts ti
     tyEnv FZ     = objTy'
     tyEnv (FS n) = vlookup argTys n
+
+    objTyOk = warn ann "checkTmDecls.objTyOk"
+            $ checkType tcs Nil Nil (Con (TyS objTy) objParBnds)
+
+    argTysOk = warn ann "checkTmDecls.argTysOk"
+             $ vall (checkType tcs objParBnds methParBnds) argTys
+
+    retTyOk = warn ann "checkTmDecls.retTyOk"
+            $ checkType tcs objParBnds methParBnds retTy
 
     bodyOk = checkExpr tcs' objParBnds methParBnds tyEnv retTy body
 

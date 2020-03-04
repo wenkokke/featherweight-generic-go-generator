@@ -76,11 +76,11 @@ prettyParBnds parBnds = "(type " <> parBnds' <> ")"
       T.concat (intersperse ", " [ argName <> " " <> prettyType argBnd | (argName, argBnd) <- parBnds ])
 
 prettyProg :: Prog -> Text
-prettyProg (Prog ds e) = T.concat (intersperse ";\n" (["package main","import \"fmt\""] ++ ds' ++ [main]))
+prettyProg (Prog ds e) = T.concat (intersperse ";\n" (["package main"] ++ ds' ++ [main]))
   where
     ds'  = prettyDecl <$> ds
     e'   = prettyExpr e
-    main = "func main() {\n  fmt.Printf(\"%#v\", " <> e' <> ")\n}"
+    main = "func main() {\n  _ = " <> e' <> "\n}"
 
 prettyDecl :: Decl -> Text
 prettyDecl (LetStruct ts parBnds args) =
