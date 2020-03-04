@@ -345,15 +345,15 @@ instance ( Fin a
          , Enumerable ti
          ) => Enumerable (MSig a ts ti) where
   enumerate = share $ aconcat
-    [ pay . c4 . plusFin @_ @a Z         $ MSig @a @ts @ti @Z         @Z
-    , pay . c4 . plusFin @_ @a Z         $ MSig @a @ts @ti @(S Z)     @Z
-    , pay . c4 . plusFin @_ @a Z         $ MSig @a @ts @ti @(S (S Z)) @Z
-    , pay . c4 . plusFin @_ @a (S Z)     $ MSig @a @ts @ti @Z         @(S Z)
-    , pay . c4 . plusFin @_ @a (S Z)     $ MSig @a @ts @ti @(S Z)     @(S Z)
-    , pay . c4 . plusFin @_ @a (S Z)     $ MSig @a @ts @ti @(S (S Z)) @(S Z)
-    , pay . c4 . plusFin @_ @a (S (S Z)) $ MSig @a @ts @ti @Z         @(S (S Z))
-    , pay . c4 . plusFin @_ @a (S (S Z)) $ MSig @a @ts @ti @(S Z)     @(S (S Z))
-    , pay . c4 . plusFin @_ @a (S (S Z)) $ MSig @a @ts @ti @(S (S Z)) @(S (S Z))
+    [ c4 . plusFin @_ @a Z         $ MSig @a @ts @ti @Z         @Z
+    , c4 . plusFin @_ @a Z         $ MSig @a @ts @ti @(S Z)     @Z
+    , c4 . plusFin @_ @a Z         $ MSig @a @ts @ti @(S (S Z)) @Z
+    , c4 . plusFin @_ @a (S Z)     $ MSig @a @ts @ti @Z         @(S Z)
+    , c4 . plusFin @_ @a (S Z)     $ MSig @a @ts @ti @(S Z)     @(S Z)
+    , c4 . plusFin @_ @a (S Z)     $ MSig @a @ts @ti @(S (S Z)) @(S Z)
+    , c4 . plusFin @_ @a (S (S Z)) $ MSig @a @ts @ti @Z         @(S (S Z))
+    , c4 . plusFin @_ @a (S (S Z)) $ MSig @a @ts @ti @(S Z)     @(S (S Z))
+    , c4 . plusFin @_ @a (S (S Z)) $ MSig @a @ts @ti @(S (S Z)) @(S (S Z))
     ]
 
 instance Bifunctor (MSig a) where

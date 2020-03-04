@@ -32,10 +32,17 @@ fgg fp = do
   return (exitCode, stdout', stderr)
 
 allProgs :: [DB.Prog ()]
-allProgs = concatMap snd (take 30 values)
+allProgs = concatMap snd (take 15 values)
 
 wellTypedProgs :: IO [DB.Prog ()]
-wellTypedProgs = search 30 DB.checkProg
+wellTypedProgs = search 15 (DB.checkProg' opts)
+  where
+    opts = DB.TCSOpts
+      { DB.optMethMin     = Just 1
+      , DB.optFldMin      = Just 1
+      , DB.optEmptyStrMax = Just 2
+      , DB.optEmptyIntMax = Just 1
+      }
 
 main :: IO ()
 main = do
@@ -44,14 +51,4 @@ main = do
   forM_ progs $ \prog -> do
     let progSrc = N.prettyProg (DB.convProg prog)
     T.putStrLn progSrc
-    -- withTempFile "." "main.go" $ \tmpPath tmpHandle -> do
-    --   T.hPutStr tmpHandle progSrc
-    --   hClose tmpHandle
-    --   (exit, stdout, stderr) <- fgg tmpPath
-    --   T.putStrLn "Output:"
-    --   putStrLn stdout
-    --   T.putStrLn ""
-    --   T.putStrLn "Errors:"
-    --   putStrLn stderr
-    --   print exit
-    --   T.putStrLn ""
+    T.putStrLn ""

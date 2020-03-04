@@ -37,15 +37,15 @@ import Unsafe.Coerce (unsafeCoerce)
 
 -- The following rule suppresses warnings,
 -- comment it out to show warnings while type-checking:
--- {-# RULES "warn/quiet" forall msg cond. warn msg cond = cond #-}
+{-# RULES "warn/quiet" forall ann msg cond. warn ann msg cond = cond #-}
 
 {-# NOINLINE warn #-}
-warn :: (Coolean cool) => String -> cool -> cool
-warn msg cond
-  | not (toBool cond) = trace msg cond
+warn :: (Show ann, Coolean cool) => ann -> String -> cool -> cool
+warn ann msg cond
+  | not (toBool cond) = trace (printf "Warning: '%s' at %s" msg (show ann)) cond
   | otherwise         = cond
 
--- ** Type checking programs
+-- ** Checking programs
 
 data TCS ts ti f m = (Fin ts, Fin ti, Fin f, Fin m) => TCS
   { methSigsI :: Map (ti, m) (TySig MSig ts ti)
@@ -57,6 +57,15 @@ data TCS ts ti f m = (Fin ts, Fin ti, Fin f, Fin m) => TCS
   , intSig    :: ti -> TySig ISig ts ti
   , methUndef :: Set m
   , fldUndef  :: Set f
+  , emptyStrMax :: Maybe Int
+  , emptyIntMax :: Maybe Int
+  }
+
+data TCSOpts = TCSOpts
+  { optMethMin   :: Maybe Int -- ^ Minimum number of methods
+  , optFldMin    :: Maybe Int -- ^ Minimum number of fields
+  , optEmptyStrMax :: Maybe Int -- ^ Maximum number of empty structs
+  , optEmptyIntMax :: Maybe Int -- ^ Maximum number of empty interfaces
   }
 
 
@@ -87,59 +96,106 @@ tyParBnds TCS{..} (TyS ts) k = case strSig ts of TySig parBnds _ -> k parBnds
 tyParBnds TCS{..} (TyI ti) k = case intSig ti of TySig parBnds _ -> k parBnds
 
 
--- |Type check programs.
-checkProg :: (Show ann) => Prog ann -> Cool
-checkProg (FDecls ann fds) = checkFDecls Z fds
+-- |Check programs.
+checkProg :: forall ann.
+             (Show ann)
+          => Prog ann
+          -> Cool
+checkProg = checkProg' opts
+  where
+    opts = TCSOpts
+      { optMethMin     = Nothing
+      , optFldMin      = Nothing
+      , optEmptyStrMax = Nothing
+      , optEmptyIntMax = Nothing
+      }
+
+-- |Check programs, with additional options for the maximum number of empty
+--  structs and interfaces, and the minimum number of fields and methods.
+checkProg' :: forall ann.
+             (Show ann)
+           => TCSOpts
+           -> Prog ann
+           -> Cool
+checkProg' opts (FDecls ann fds) = checkFDecls opts Z fds
 
 
--- |Type check field name declarations.
+-- |Check field name declarations.
 checkFDecls :: forall ann f.
                (Show ann, Fin f)
-            => Nat f
+            => TCSOpts
+            -> Nat f
             -> FDecls ann f
             -> Cool
-checkFDecls fldNum (NewF ann fds) = checkFDecls (S fldNum) fds
-checkFDecls fldNum (MDecls ann mds) = checkMDecls fldNum Z mds
+checkFDecls TCSOpts{..} fldNum (NewF ann fds) = checkFDecls opts' (S fldNum) fds
+  where
+    opts' = TCSOpts { optFldMin = pred <$> optFldMin, ..}
+checkFDecls opts@TCSOpts{..} fldNum (MDecls ann mds)
+  = if maybe True (<= 0) optFldMin then checkMDecls opts fldNum Z mds else false
 
 
--- |Type check method name declarations.
+-- |Check method name declarations.
 checkMDecls :: forall ann f m.
                (Show ann, Fin f, Fin m)
-            => Nat f
+            => TCSOpts
+            -> Nat f
             -> Nat m
             -> MDecls ann f m
             -> Cool
-checkMDecls fldNum methNum (NewM ann mds) = checkMDecls fldNum (S methNum) mds
-checkMDecls fldNum methNum (TyDecls ann tys) = checkTyDecls tcs tys
+checkMDecls TCSOpts{..} fldNum methNum (NewM ann mds) = checkMDecls opts' fldNum (S methNum) mds
+  where
+    opts' = TCSOpts{ optMethMin = pred <$> optMethMin, ..}
+checkMDecls TCSOpts{..} fldNum methNum (TyDecls ann tys)
+  = if maybe True (<= 0) optMethMin then checkTyDecls tcs tys else false
   where
     tcs = TCS
-      { methSigsI = M.empty
-      , methSigsS = M.empty
-      , methSetI  = fromZ
-      , methSetS  = fromZ
-      , fldSig    = M.empty
-      , strSig    = fromZ
-      , intSig    = fromZ
-      , methUndef = S.fromAscList (vlist (allFin methNum))
-      , fldUndef  = S.fromAscList (vlist (allFin fldNum))
+      { methSigsI   = M.empty
+      , methSigsS   = M.empty
+      , methSetI    = fromZ
+      , methSetS    = fromZ
+      , fldSig      = M.empty
+      , strSig      = fromZ
+      , intSig      = fromZ
+      , methUndef   = S.fromAscList (vlist (allFin methNum))
+      , fldUndef    = S.fromAscList (vlist (allFin fldNum))
+      , emptyStrMax = optEmptyStrMax
+      , emptyIntMax = optEmptyIntMax
       }
 
 
--- |Type check type declarations.
+-- |Check type declarations and enforce restrictions on the number of empty
+--  structs and interfaces.
 checkTyDecls :: forall ann ts ti f m.
+                    (Show ann)
+                 => TCS ts ti f m
+                 -> TyDecls ann ts ti f m
+                 -> Cool
+checkTyDecls TCS{..} tys@(LetStruct _ann _parBnds Nil _rest)
+  = if maybe True (> 0) emptyStrMax then checkTyDecls' tcs' tys else false
+  where
+    tcs' = TCS{ emptyStrMax = pred <$> emptyStrMax, .. }
+checkTyDecls TCS{..} tys@(LetInterface _ann _parBnds _parents Nil _rest)
+  = if maybe True (> 0) emptyIntMax then checkTyDecls' tcs' tys else false
+  where
+    tcs' = TCS{ emptyIntMax = pred <$> emptyIntMax, .. }
+checkTyDecls tcs tys = checkTyDecls' tcs tys
+
+
+-- |Check type declarations.
+checkTyDecls' :: forall ann ts ti f m.
                 (Show ann)
              => TCS ts ti f m
              -> TyDecls ann ts ti f m
              -> Cool
-checkTyDecls tcs@TCS{..} (LetStruct ann (parBnds :: Vec _ a) fldsAndTys rest)
+checkTyDecls' tcs@TCS{..} (LetStruct ann (parBnds :: Vec _ a) fldsAndTys rest)
   = fldsUniq &&& fldTysOk &&& parBndsOk &&& checkTyDecls tcs' rest
   where
     fldsUniq :: Bool
-    fldsUniq = warn "checkTyDecls.fldsUniq"
+    fldsUniq = warn ann "checkTyDecls'.fldsUniq"
              $ allDifferent (vlist (vmap fst fldsAndTys))
 
     parBndsOk :: Bool
-    parBndsOk = warn "checkTyDecls.parBndsOk"
+    parBndsOk = warn ann "checkTyDecls'.parBndsOk"
               $ vall isTyI parBnds && vall (checkType tcs Nil Nil) parBnds
 
     parBnds' :: Vec (Type Z (S ts) ti) a
@@ -175,21 +231,25 @@ checkTyDecls tcs@TCS{..} (LetStruct ann (parBnds :: Vec _ a) fldsAndTys rest)
     fldUndef' = S.difference fldUndef (S.fromList (vlist (vmap fst fldsAndTys)))
 
     tcs' :: TCS (S ts) ti f m
-    tcs' = TCS methSigsI' methSigsS' methSetI methSetS' fldSig' strSig' intSig' methUndef fldUndef'
+    tcs' = TCS methSigsI' methSigsS'
+               methSetI methSetS'
+               fldSig' strSig' intSig'
+               methUndef fldUndef'
+               emptyStrMax emptyIntMax
 
     fldTysOk :: Bool
-    fldTysOk = warn "checkTyDecls.fldTysOk"
+    fldTysOk = warn ann "checkTyDecls'.fldTysOk"
              $ vall (checkType tcs parBnds Nil) (vmap snd fldsAndTys)
 
-checkTyDecls tcs@TCS{..} (LetInterface ann (parBnds :: Vec _ a) parents methNamesAndSigs rest)
+checkTyDecls' tcs@TCS{..} (LetInterface ann (parBnds :: Vec _ a) parents methNamesAndSigs rest)
   = methsUniq &&& parBndsOk &&& isJust parentMethSigsI !&& methSigsOk &&& checkTyDecls tcs' rest
   where
     methsUniq :: Bool
-    methsUniq = warn "checkTyDecls.methsUniq"
+    methsUniq = warn ann "checkTyDecls'.methsUniq"
               $ allDifferent (vlist (vmap fst methNamesAndSigs))
 
     parBndsOk :: Bool
-    parBndsOk = warn "checkTyDecls.parBndsOk"
+    parBndsOk = warn ann "checkTyDecls'.parBndsOk"
               $ vall isTyI parBnds && vall (checkType tcs Nil Nil) parBnds
 
     parBnds' :: Vec (Type Z ts (S ti)) a
@@ -227,47 +287,56 @@ checkTyDecls tcs@TCS{..} (LetInterface ann (parBnds :: Vec _ a) parents methName
     methUndef' = S.difference methUndef (S.fromList (vlist (vmap fst methNamesAndSigs)))
 
     tcs' :: TCS ts (S ti) f m
-    tcs' = TCS methSigsI' methSigsS' methSetI' methSetS fldSig' strSig' intSig' methUndef' fldUndef
+    tcs' = TCS methSigsI' methSigsS'
+               methSetI' methSetS
+               fldSig' strSig' intSig'
+               methUndef' fldUndef
+               emptyStrMax emptyIntMax
 
     methSigsOk :: Bool
-    methSigsOk = warn "checkTyDecls.methSigsOk"
-               $ vall (checkMSig tcs' parBnds') (vmap snd methNamesAndSigs)
+    methSigsOk = vall (checkMSig ann tcs' parBnds') (vmap snd methNamesAndSigs)
 
-checkTyDecls tcs@TCS{..} (TmDecls ann rest)
+checkTyDecls' tcs@TCS{..} (TmDecls ann rest)
   | S.null fldUndef = checkTmDecls tcs rest
   | otherwise       = false
 
 
--- |Type check method signatures.
-checkMSig :: forall a ts ti f m. (Fin a) => TCS ts ti f m -> Vec (Type Z ts ti) a -> MSig a ts ti -> Bool
-checkMSig tcs@TCS{..} objParBnds (MSig (methParBnds :: Vec _ a') _objTy argTys retTy) =
+-- |Check method signatures.
+checkMSig :: forall ann a ts ti f m.
+             (Show ann, Fin a)
+          => ann
+          -> TCS ts ti f m
+          -> Vec (Type Z ts ti) a
+          -> MSig a ts ti
+          -> Bool
+checkMSig ann tcs@TCS{..} objParBnds (MSig (methParBnds :: Vec _ a') _objTy argTys retTy) =
   methParBndsOk && argAndRetTysOk
   where
     methParBndsOk :: Bool
-    methParBndsOk = warn "checkMSig.methParBndsOk"
+    methParBndsOk = warn ann "checkMSig.methParBndsOk"
                   $ vall isTyI methParBnds && vall (checkType tcs objParBnds Nil) methParBnds
 
     argAndRetTysOk :: Bool
-    argAndRetTysOk = warn "checkMSig.argAndRetTysOk"
+    argAndRetTysOk = warn ann "checkMSig.argAndRetTysOk"
                    $ plusEq @a' @a (vlength methParBnds)
                    $ vall (checkType tcs objParBnds methParBnds) (Cons retTy argTys)
 
--- |Type check method declarations.
+-- |Check method declarations.
 checkTmDecls :: forall ann ts ti f m. (Show ann) => TCS ts ti f m -> TmDecls ann ts ti f m -> Cool
 checkTmDecls tcs@TCS{..}
   (LetMethod ann (objParBnds :: Vec _ a) objTy m (methParBnds :: Vec _ a') (argTys :: Vec _ n) retTy body rest)
   = methUniq &&& objParBndsOk &&& methParBndsOk &&& bodyOk &&& restOk
   where
     methUniq :: Bool
-    methUniq = warn "checkTmDecls.methUniq"
+    methUniq = warn ann "checkTmDecls.methUniq"
              $ M.notMember (objTy, m) methSigsS
 
     objParBndsOk :: Bool
-    objParBndsOk = warn "checkTmDecls.objParBndsOk"
+    objParBndsOk = warn ann "checkTmDecls.objParBndsOk"
                  $ vall isTyI objParBnds && vall (checkType tcs Nil Nil) objParBnds
 
     methParBndsOk :: Bool
-    methParBndsOk = warn "checkTmDecls.methParBndsOk"
+    methParBndsOk = warn ann "checkTmDecls.methParBndsOk"
                   $ vall isTyI methParBnds && vall (checkType tcs objParBnds Nil) methParBnds
 
     newMethSig :: TySig MSig ts ti
@@ -285,7 +354,11 @@ checkTmDecls tcs@TCS{..}
     methUndef' = S.delete m methUndef
 
     tcs' :: TCS ts ti f m
-    tcs' = TCS methSigsI methSigsS' methSetI methSetS' fldSig strSig intSig methUndef' fldUndef
+    tcs' = TCS methSigsI methSigsS'
+               methSetI methSetS'
+               fldSig strSig intSig
+               methUndef' fldUndef
+               emptyStrMax emptyIntMax
 
     objTy' :: Type (a' :+ a) ts ti
     objTy' = Con (TyS objTy) (vmap (Par . raise (vlength methParBnds)) (allFin (vlength objParBnds)))
@@ -300,11 +373,11 @@ checkTmDecls tcs@TCS{..}
 
 checkTmDecls tcs@TCS{..} (Main ann retTy body)
   | S.null methUndef = checkExpr tcs Nil Nil fromZ retTy body
-  | otherwise        = warn "checkTmDecls.methUndef" false
+  | otherwise        = warn ann "checkTmDecls.methUndef" false
 
 
 
--- |Type check expressions.
+-- |Check expressions.
 checkExpr :: forall ann a' a ts ti f m x.
              (Show ann, Fin a', Fin a, Fin (a' :+ a))
           => TCS ts ti f m
@@ -338,21 +411,21 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
             where
               -- Is the return type correct?
               ty'      = Con (TyS ts) tyArgs
-              tyOk     = warn (printf "checkExpr.Struct.tyOk: Expected: %s, Found: %s" (show ty) (show ty'))
+              tyOk     = warn ann (printf "checkExpr.Struct.tyOk: Expected: %s, Found: %s" (show ty) (show ty'))
                        $ ty == ty'
               -- Is each type parameter within the expected bounds?
-              tyArgsOk = warn "checkExpr.Struct.tyArgsOk"
+              tyArgsOk = warn ann "checkExpr.Struct.tyArgsOk"
                        $ vall (checkType tcs objParBnds methParBnds) tyArgs
                       && checkParBnds tcs objParBnds methParBnds parBnds tyArgs
 
               -- Is each argument type within the expected bounds?
-              argTysOk = warn "checkExpr.Struct.argTysOk"
+              argTysOk = warn ann "checkExpr.Struct.argTysOk"
                        $ checkParBnds' tcs objParBnds methParBnds argTys' tys
                 where
                   tys     = vmap snd argsAndTys
                   argTys' = vmap (substType (vlookup tyArgs)) argTys
               -- Is each argument well-typed?
-              argsOk   = warn "checkExpr.Struct.argsOk"
+              argsOk   = warn ann "checkExpr.Struct.argsOk"
                        $ vall' (\(arg, argTy) -> go argTy arg) argsAndTys
 
     -- Case: Select
@@ -392,21 +465,21 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
               s :: (a2 :+ a1) -> Type (a' :+ a) ts ti
               s = either id id . vlookupEither methTyArgs objTyArgs
               -- Is the object type ok?
-              objTyOk = warn "checkExpr.Call.objTyOk"
+              objTyOk = warn ann "checkExpr.Call.objTyOk"
                       $ tc == objTc
               -- Is the return type correct?
-              retTyOk = warn "checkExpr.Call.retTyOk"
+              retTyOk = warn ann "checkExpr.Call.retTyOk"
                       $ ty == substType s retTy
               -- Is each type argument within the expected bounds?
-              objTyArgsOk  = warn "checkExpr.Call.objTyArgsOk"
+              objTyArgsOk  = warn ann "checkExpr.Call.objTyArgsOk"
                            $ checkParBnds tcs objParBnds methParBnds objParBnds' objTyArgs
-              methTyArgsOk = warn "checkExpr.Call.methTyArgsOk"
+              methTyArgsOk = warn ann "checkExpr.Call.methTyArgsOk"
                            $ checkParBnds' tcs objParBnds methParBnds methParBnds'' methTyArgs
                 where
                   methParBnds'' :: Vec (Type (a' :+ a) ts ti) a2
                   methParBnds'' = vmap (substType (vlookup objTyArgs)) methParBnds'
               -- Is each argument well-typed?
-              argsOk = warn "checkExpr.Call.argsOk"
+              argsOk = warn ann "checkExpr.Call.argsOk"
                      $ vand' (vzip go argTys' args)
                 where
                   args :: Vec (Expr ann (a' :+ a) ts ti f m x) n
