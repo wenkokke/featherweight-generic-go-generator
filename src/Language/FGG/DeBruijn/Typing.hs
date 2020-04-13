@@ -423,6 +423,7 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
               ty'      = Con (TyS ts) tyArgs
               tyOk     = warn ann (printf "checkExpr.Struct.tyOk: Expected: %s, Found: %s" (show ty) (show ty'))
                        $ ty == ty'
+
               -- Is each type parameter within the expected bounds?
               tyArgsOk = warn ann "checkExpr.Struct.tyArgsOk"
                        $ vall (checkType tcs objParBnds methParBnds) tyArgs
@@ -430,10 +431,11 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
 
               -- Is each argument type within the expected bounds?
               argTysOk = warn ann "checkExpr.Struct.argTysOk"
-                       $ checkParBnds' tcs objParBnds methParBnds argTys' tys
+                       $ checkParBnds' tcs objParBnds methParBnds tys argTys'
                 where
                   tys     = vmap snd argsAndTys
                   argTys' = vmap (substType (vlookup tyArgs)) argTys
+
               -- Is each argument well-typed?
               argsOk   = warn ann "checkExpr.Struct.argsOk"
                        $ vall' (\(arg, argTy) -> go argTy arg) argsAndTys
