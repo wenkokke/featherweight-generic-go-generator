@@ -1,3 +1,4 @@
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Main where
@@ -8,13 +9,17 @@ import Control.Monad (forM, forM_)
 import Control.Search
 import Data.List (transpose)
 import Data.List.Split (chunksOf)
+import Data.Text (Text)
+import qualified Data.Text as T
 import qualified Data.Text.IO as T
 import qualified Data.Text.Lazy as TL
+import Data.Maybe (catMaybes)
 import GHC.Conc (getNumProcessors)
 import qualified Language.FGG.DeBruijn as DB
 import qualified Language.FGG.Named as N
 import System.Exit (ExitCode(..))
 import System.FilePath ((</>))
+import System.IO (stderr)
 import System.IO.Temp (withSystemTempDirectory)
 import System.Process (readProcessWithExitCode)
 import System.ProgressBar
@@ -31,7 +36,9 @@ batchSize = 100
 fgg :: [String] -> IO (ExitCode, String, String)
 fgg args = readProcessWithExitCode "go" ("run" : "github.com/rhu1/fgg" : args) ""
 
-test_monomCommute :: DB.Prog ann -> IO ()
+type ErrorMsg = Text
+
+test_monomCommute :: DB.Prog ann -> IO (Maybe ErrorMsg)
 test_monomCommute prog = do
   let progSrc = N.prettyProg (DB.convProg prog)
   withSystemTempDirectory "fgg" $ \tmpDir -> do
@@ -39,14 +46,9 @@ test_monomCommute prog = do
     T.writeFile tmpPath progSrc
     (exitCode, stdout, stderr) <- fgg ["-eval=-1", "-test-monom", tmpPath]
     case exitCode of
-      ExitSuccess -> return ()
-      _           -> do
-        putStrLn "Source:"
-        T.putStrLn progSrc
-        putStrLn "Output:"
-        putStrLn stdout
-        putStrLn "Errors:"
-        putStrLn stderr
+      ExitSuccess -> return Nothing
+      _           -> return . Just . T.unlines $
+        [ "Source:" , progSrc , "Output:" , T.pack stdout , "Errors:" , T.pack stderr ]
 
 wellTypedProgs :: Int -> IO [DB.Prog ()]
 wellTypedProgs depth = search' O depth (DB.checkProg' opts)
@@ -76,15 +78,20 @@ main = do
     ts <- forM subBatches $ \subBatch -> do
 
       -- Create an MVar to signal completion
-      t <- newEmptyMVar :: IO (MVar ())
+      t <- newEmptyMVar :: IO (MVar [ErrorMsg])
 
       -- Create worker thread
       _ <- forkFinally
-           (forM_ subBatch $ \prog -> do
-               test_monomCommute prog
-               incProgress pb 1)
-           (\_ -> putMVar t ())
+           (forM subBatch $ \prog -> do
+               merrMsg <- test_monomCommute prog
+               incProgress pb 1
+               return merrMsg)
+           (\case
+               Left  err     -> putMVar t [T.pack . show $ err]
+               Right merrLog -> putMVar t (catMaybes merrLog))
       return t
 
     -- Wait for all worker threads to finish
-    mapM_ takeMVar ts
+    forM_ ts $ \t -> do
+      errLog <- takeMVar t
+      forM_ errLog (T.hPutStrLn stderr)

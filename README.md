@@ -1,23 +1,18 @@
-# Featherweight Generic Go Generator
+# A Few Generic Go Programs
 
-Featherweight Go (FG) is a small but significant subset of the Go programming language.
-Featherweight Generic Go (FGG) is an extension of FG with generics.
-This project is an enumerator for well-typed FGG programs, to enable the property-based testing of implementations of Generic Go.
+We use @claessen2105 to lazily enumerate all well-typed programs from a subset of FGG up to some size.
+The subset is made up of those programs where:
++ the program has *at least* one method and one field;
++ the program has *at most* one empty interface and *at most* two empty structs;
++ each method has *at most* two arguments;
++ each struct has *at most* two fields;
++ each interface has *at most* two members and two parents; and
++ each method or type constructor has *at most* to type parameters.
+Moreover, we disallow mutually recursive type definitions.
+These measures are taken in an effort to truncate the space of possible programs.
 
-There are a couple of restrictions to this FGG generator.
-Go and FGG are languages with many n-ary constructs – structs can have many fields, interfaces can have many fields, methods can have many arguments, and in FGG each of these can  have any number of type parameters as well!
-The generator generates a subset of FGG in which each of these n-ary constructs can have *zero*, *one*, or *two* instances.
-This is largely to cut down on the number of generated terms.
+---
 
-The ‘Main.hs‘ file included in this package simply enumerates all well-typed FGG programs with up to 10 constructs.
-However, it should be fairly simple to provide your own program which *uses* the generated constructs, based on the example given.
-
-Compilation and installation should be easy.
-Make sure you have an up-to-date version of [Haskell Stack](https://docs.haskellstack.org/en/stable/README/).
-Then you can use the following commands:
-
-``` bash
-$ stack build    # builds the project
-$ stack install  # installs the executable generated from Main.hs
-$ stack run main # runs Main.hs
-```
+Koen Claessen, Jonas Duregård, and Michał Pałka.
+*Generating constrained random data with uniform distribution.*
+Journal of Functional Programming, 2015.
