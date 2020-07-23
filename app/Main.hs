@@ -19,7 +19,7 @@ import qualified Language.FGG.DeBruijn as DB
 import qualified Language.FGG.Named as N
 import System.Exit (ExitCode(..))
 import System.FilePath ((</>))
-import System.IO (stderr)
+import System.IO (stdout,stderr)
 import System.IO.Temp (withSystemTempDirectory)
 import System.Process (readProcessWithExitCode)
 import System.ProgressBar
@@ -44,11 +44,11 @@ test_monomCommute prog = do
   withSystemTempDirectory "fgg" $ \tmpDir -> do
     let tmpPath = tmpDir </> "main.fgg"
     T.writeFile tmpPath progSrc
-    (exitCode, stdout, stderr) <- fgg ["-eval=-1", "-test-monom", tmpPath]
+    (exitCode, fggout, fggerr) <- fgg ["-eval=-1", "-test-monom", tmpPath]
     case exitCode of
       ExitSuccess -> return Nothing
       _           -> return . Just . T.unlines $
-        [ "Source:" , progSrc , "Output:" , T.pack stdout , "Errors:" , T.pack stderr ]
+        [ "Source:" , progSrc , "Output:" , T.pack fggout , "Errors:" , T.pack fggerr ]
 
 wellTypedProgs :: Int -> IO [DB.Prog ()]
 wellTypedProgs depth = search' O depth (DB.checkProg' opts)
@@ -71,7 +71,7 @@ main = do
 
     -- Create a progress bar
     let style = defStyle { stylePrefix = msg ("Batch #" <> TL.pack (show batchNum)) }
-    pb <- newProgressBar style 10 (Progress 0 batchSize ())
+    pb <- hNewProgressBar stdout style 10 (Progress 0 batchSize ())
 
     -- Divvy up the work amongst CPUs
     let subBatches = transpose (chunksOf numProcessors batch)
