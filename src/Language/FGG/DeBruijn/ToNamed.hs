@@ -141,7 +141,7 @@ convMSig (nsa, nsts, nsti, nsm) (m, DB.MSig methParBnds _ argTys retTy)
   = N.Sig m' methParBnds' argTys' retTy'
   where
     nsa'         = extendNS' (vlength methParBnds) nsa
-    nsa''        = peekNS nsa' (vlength methParBnds)
+    nsa''        = peekNS nsa (vlength methParBnds)
     nsx          = freshNS "x" (vlength argTys)
     nss          = (nsa, nsts, nsti)
     nss'         = (nsa', nsts, nsti)
