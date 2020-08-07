@@ -41,6 +41,7 @@ library:
   exposed-modules:
     - Language.FGG.Common
     - Language.FGG.DeBruijn
+    - Language.FGG.DeBruijn.Size
     - Language.FGG.DeBruijn.ToNamed
     - Language.FGG.Named
 

@@ -21,7 +21,6 @@ import Data.Bifunctor
 import Language.FGG.Common
 
 
-
 -- ** Programs
 
 data Prog ann
@@ -334,7 +333,7 @@ data MSig a ts ti
     (Fin a, Fin (a' :+ a)) =>
     MSig
     (Vec (Type a ts ti) a')        -- ^ Type parameter bounds
-    (TyCon ts ti)                      -- ^ Object type
+    (TyCon ts ti)                  -- ^ Object type
     (Vec (Type (a' :+ a) ts ti) n) -- ^ Arguments types
     (Type (a' :+ a) ts ti)         -- ^ Return type
   deriving (Typeable)
