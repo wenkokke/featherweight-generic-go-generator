@@ -24,7 +24,7 @@ import System.Exit (ExitCode(..),exitSuccess)
 import System.FilePath ((</>))
 import System.IO (stdout,stderr)
 import System.IO.Temp (withSystemTempDirectory)
-import System.Process (readProcessWithExitCode)
+import System.Process (readProcessWithExitCode,showCommandForUser)
 import qualified System.ProgressBar as PB
 import Text.Printf
 
@@ -94,7 +94,7 @@ options =
 optFlag :: Bool -> String -> [String] -> [String]
 optFlag cond flag flags = if cond then flag:flags else flags
 
-fgg :: Options -> FilePath -> IO (ExitCode, String, String)
+fgg :: Options -> FilePath -> IO (String, ExitCode, String, String)
 fgg Options{..} path
   = fggWithArgs . concat $
     [ goArgs
@@ -102,7 +102,9 @@ fgg Options{..} path
     , [ "-v" | verbosity >= StepByStep ]
     , [ path ]]
   where
-    fggWithArgs args = readProcessWithExitCode goCmd args ""
+    fggWithArgs args = do
+      (exitCode, fggout, fggerr) <- readProcessWithExitCode goCmd args ""
+      return (showCommandForUser goCmd args, exitCode, fggout, fggerr)
 
 data Level
   = Debug
@@ -120,8 +122,11 @@ test_monomCommute opts prog = do
   withSystemTempDirectory "fgg" $ \tmpDir -> do
     let tmpPath = tmpDir </> "main.fgg"
     T.writeFile tmpPath progSrc
-    (exitCode, fggout, fggerr) <- fgg opts tmpPath
-    let txt = T.unlines [ "Source:" , progSrc , "Output:" , T.pack fggout , "Errors:" , T.pack fggerr ]
+    (cmd, exitCode, fggout, fggerr) <- fgg opts tmpPath
+    let txt = T.unlines [ "Command:" , T.pack cmd
+                        , "Source:"  , progSrc
+                        , "Output:"  , T.pack fggout
+                        , "Errors:"  , T.pack fggerr ]
     return $ case exitCode of
                ExitSuccess -> if verbosity opts >= Source then Just (Msg Debug txt) else Nothing
                _           -> Just (Msg Error txt)
