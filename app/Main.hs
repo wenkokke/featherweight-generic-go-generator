@@ -157,7 +157,7 @@ main = do
     -- Print batch description
     unless (null batch) $ do
       let batchProgSizes = map DB.size batch
-      printf "Batch %03d: %d programs, from size %d to %d\n"
+      printf "Batch %03d: %d programs, with sizes between %d and %d\n"
         batchNum
         (length batch)           -- Size of batch
         (minimum batchProgSizes) -- Size of smallest
