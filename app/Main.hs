@@ -19,11 +19,11 @@ import qualified Language.FGG.DeBruijn.Size as DB
 import qualified Language.FGG.DeBruijn as DB
 import qualified Language.FGG.Named as N
 import System.Console.GetOpt
+import System.Directory (removeFile)
 import System.Environment (getArgs)
 import System.Exit (ExitCode(..),exitSuccess)
-import System.FilePath ((</>))
 import System.IO (stdout,stderr)
-import System.IO.Temp (withSystemTempDirectory)
+import System.IO.Temp (writeSystemTempFile)
 import System.Process (readProcessWithExitCode,showCommandForUser)
 import qualified System.ProgressBar as PB
 import Text.Printf
@@ -44,6 +44,7 @@ data Options = Options
   , numProcesses :: Maybe Int
   , goCmd        :: String
   , goArgs       :: [String]
+  , inline       :: Bool
   , verbosity    :: Verbosity
   , showHelp     :: Bool
   } deriving Show
@@ -56,6 +57,7 @@ defaultOptions = Options
   , numProcesses = Nothing
   , goCmd        = "go"
   , goArgs       = ["run", "github.com/rhu1/fgg", "-test-monom"]
+  , inline       = True
   , verbosity    = Quiet
   , showHelp     = False
   }
@@ -80,6 +82,9 @@ options =
   , Option [] ["go-args"]
     (ReqArg (\args opts -> opts { goArgs = words args }) "ARGS")
     "Arguments for go executable."
+  , Option [] ["no-inline"]
+    (NoArg (\opts -> opts { inline = True }))
+    "Don't pass programs inline."
   , Option ['v'] []
     (NoArg (\opts -> opts { verbosity = Source }))
     "Show source, output, and error for all programs."
@@ -91,20 +96,18 @@ options =
     "Show this help."
   ]
 
-optFlag :: Bool -> String -> [String] -> [String]
-optFlag cond flag flags = if cond then flag:flags else flags
-
-fgg :: Options -> FilePath -> IO (String, ExitCode, String, String)
-fgg Options{..} path
+fgg :: Options -> String -> IO (String, (ExitCode, String, String))
+fgg Options{..} srcOrPath
   = fggWithArgs . concat $
     [ goArgs
     , [ "-eval=" <> show maxSteps ]
     , [ "-v" | verbosity >= StepByStep ]
-    , [ path ]]
+    , [ "-inline" | inline ]
+    , [ srcOrPath ]]
   where
     fggWithArgs args = do
-      (exitCode, fggout, fggerr) <- readProcessWithExitCode goCmd args ""
-      return (showCommandForUser goCmd args, exitCode, fggout, fggerr)
+      res <- readProcessWithExitCode goCmd args ""
+      return (showCommandForUser goCmd args, res)
 
 data Level
   = Debug
@@ -117,19 +120,28 @@ data Msg = Msg
   }
 
 test_monomCommute :: Options -> DB.Prog ann -> IO (Maybe Msg)
-test_monomCommute opts prog = do
-  let progSrc = N.prettyProg (DB.convProg prog)
-  withSystemTempDirectory "fgg" $ \tmpDir -> do
-    let tmpPath = tmpDir </> "main.fgg"
-    T.writeFile tmpPath progSrc
-    (cmd, exitCode, fggout, fggerr) <- fgg opts tmpPath
-    let txt = T.unlines [ "Command:" , T.pack cmd
-                        , "Source:"  , progSrc
-                        , "Output:"  , T.pack fggout
-                        , "Errors:"  , T.pack fggerr ]
-    return $ case exitCode of
-               ExitSuccess -> if verbosity opts >= Source then Just (Msg Debug txt) else Nothing
-               _           -> Just (Msg Error txt)
+test_monomCommute opts@Options{..} prog = do
+  let src = N.prettyProg (DB.convProg prog)
+  let srcStr = T.unpack src
+
+  srcOrPath <-
+        if inline then
+          return . unwords . lines $ srcStr
+        else
+          writeSystemTempFile "fgg" srcStr
+
+  (cmd, (exitCode, out, err)) <- fgg opts srcOrPath
+
+  unless inline $ removeFile srcOrPath
+
+  let txt = T.unlines [ "Command:" , T.pack cmd
+                      , "Source:"  , src
+                      , "Output:"  , T.pack out
+                      , "Errors:"  , T.pack err ]
+
+  return $ case exitCode of
+             ExitSuccess -> if verbosity >= Source then Just (Msg Debug txt) else Nothing
+             _           -> Just (Msg Error txt)
 
 wellTypedProgs :: Int -> IO [DB.Prog ()]
 wellTypedProgs depth = NEAT.search' NEAT.O depth (DB.checkProg' opts)

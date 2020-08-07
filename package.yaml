@@ -16,6 +16,7 @@ description: Please see the README on GitHub at <https://github.com/githubuser/f
 dependencies:
 - base
 - containers
+- directory
 - filepath
 - lazy-search
 - size-based
