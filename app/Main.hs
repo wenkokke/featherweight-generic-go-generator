@@ -39,6 +39,7 @@ data Verbosity
 
 data Options = Options
   { maxDepth     :: Int
+  , maxSteps     :: Int
   , batchSize    :: Int
   , numProcesses :: Maybe Int
   , goCmd        :: String
@@ -50,10 +51,11 @@ data Options = Options
 defaultOptions :: Options
 defaultOptions = Options
   { maxDepth     = 15
+  , maxSteps     = 100
   , batchSize    = 100
   , numProcesses = Nothing
   , goCmd        = "go"
-  , goArgs       = ["run", "github.com/rhu1/fgg", "-eval=-1", "-test-monom"]
+  , goArgs       = ["run", "github.com/rhu1/fgg", "-test-monom"]
   , verbosity    = Quiet
   , showHelp     = False
   }
@@ -62,13 +64,16 @@ options :: [OptDescr (Options -> Options)]
 options =
   [ Option ['d'] ["max-depth"]
     (ReqArg (\arg opts -> opts { maxDepth = read arg }) "NUM")
-    "Search depth."
+    "Search depth (default is 15)."
+  , Option ['n'] ["max-steps"]
+    (ReqArg (\arg opts -> opts { maxSteps = read arg}) "NUM")
+    "Maximum number of reduction steps (default is 100)."
   , Option ['b'] ["batch-size"]
     (ReqArg (\arg opts -> opts { batchSize = read arg }) "NUM")
-    "Number of tasks allocated to each thread."
+    "Number of tasks allocated to each thread (default is 100)."
   , Option ['J'] ["num-processes"]
     (ReqArg (\arg opts -> opts { numProcesses = Just . read $ arg }) "NUM")
-    "Number of processes to use."
+    "Number of processes to use (default is number of CPU cores)."
   , Option [] ["go-cmd"]
     (ReqArg (\arg opts -> opts { goCmd = arg }) "PATH")
     "Path to go executable."
@@ -86,10 +91,18 @@ options =
     "Show this help."
   ]
 
+optFlag :: Bool -> String -> [String] -> [String]
+optFlag cond flag flags = if cond then flag:flags else flags
+
 fgg :: Options -> FilePath -> IO (ExitCode, String, String)
-fgg opts path = readProcessWithExitCode (goCmd opts) (goArgs opts ++ extraArgs) ""
+fgg Options{..} path
+  = fggWithArgs . concat $
+    [ goArgs
+    , [ "-eval=" <> show maxSteps ]
+    , [ "-v" | verbosity >= StepByStep ]
+    , [ path ]]
   where
-    extraArgs = if verbosity opts >= StepByStep then ["-v", path] else [path]
+    fggWithArgs args = readProcessWithExitCode goCmd args ""
 
 data Level
   = Debug
