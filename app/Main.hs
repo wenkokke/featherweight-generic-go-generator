@@ -126,7 +126,7 @@ test_monomCommute opts@Options{..} prog = do
 
   srcOrPath <-
         if inline then
-          return . unwords . lines $ srcStr
+          return srcStr
         else
           writeSystemTempFile "fgg" srcStr
 
@@ -134,7 +134,7 @@ test_monomCommute opts@Options{..} prog = do
 
   unless inline $ removeFile srcOrPath
 
-  let txt = T.unlines [ "Command:" , T.pack cmd
+  let txt = T.unlines [ "Command:" , T.unwords . fmap T.strip . T.lines . T.pack $ cmd
                       , "Source:"  , src
                       , "Output:"  , T.pack out
                       , "Errors:"  , T.pack err ]

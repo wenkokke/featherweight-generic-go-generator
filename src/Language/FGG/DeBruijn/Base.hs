@@ -274,6 +274,18 @@ instance ( Eq a
         Just Refl -> args1 == args2
     | otherwise  = False
 
+instance ( Ord a
+         , Ord ts
+         , Ord ti
+         ) => Ord (Type a ts ti) where
+  compare (Par a1) (Par a2)               = compare a1 a2
+  compare (Par _ ) (Con _ _)              = LT
+  compare (Con _ _) (Par _)               = GT
+  compare (Con tc1 args1) (Con tc2 args2) =
+    case compare tc1 tc2 of
+      EQ  -> compare (vlist args1) (vlist args2)
+      ord -> ord
+
 instance ( Enumerable ts
          , Enumerable ti
          , Enumerable a

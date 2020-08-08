@@ -190,7 +190,7 @@ vand' = vfoldr (&&&) true
 data TyCon ts ti
   = TyS ts
   | TyI ti
-  deriving (Typeable, Eq, Show)
+  deriving (Typeable, Eq, Ord, Show)
 
 instance ( Enumerable ts
          , Enumerable ti

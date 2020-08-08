@@ -20,7 +20,7 @@ import Data.Coolean
 import Data.Either (either)
 import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as M
-import Data.Maybe (isJust, fromJust)
+import Data.Maybe (isJust,fromJust)
 import Data.List (sort)
 import Data.Set (Set)
 import qualified Data.Set as S
@@ -113,7 +113,7 @@ checkProg' :: forall ann.
            => TCSOpts
            -> Prog ann
            -> Cool
-checkProg' opts (FDecls ann fds) = checkFDecls opts Z fds
+checkProg' opts (FDecls _ann fds) = checkFDecls opts Z fds
 
 
 -- |Check field name declarations.
@@ -123,10 +123,10 @@ checkFDecls :: forall ann f.
             -> Nat f
             -> FDecls ann f
             -> Cool
-checkFDecls TCSOpts{..} fldNum (NewF ann fds) = checkFDecls opts' (S fldNum) fds
+checkFDecls TCSOpts{..} fldNum (NewF _ann fds) = checkFDecls opts' (S fldNum) fds
   where
     opts' = TCSOpts { optFldMin = pred <$> optFldMin, ..}
-checkFDecls opts@TCSOpts{..} fldNum (MDecls ann mds)
+checkFDecls opts@TCSOpts{..} fldNum (MDecls _ann mds)
   = if maybe True (<= 0) optFldMin then checkMDecls opts fldNum Z mds else false
 
 
@@ -138,10 +138,10 @@ checkMDecls :: forall ann f m.
             -> Nat m
             -> MDecls ann f m
             -> Cool
-checkMDecls TCSOpts{..} fldNum methNum (NewM ann mds) = checkMDecls opts' fldNum (S methNum) mds
+checkMDecls TCSOpts{..} fldNum methNum (NewM _ann mds) = checkMDecls opts' fldNum (S methNum) mds
   where
     opts' = TCSOpts{ optMethMin = pred <$> optMethMin, ..}
-checkMDecls TCSOpts{..} fldNum methNum (TyDecls ann tys)
+checkMDecls TCSOpts{..} fldNum methNum (TyDecls _ann tys)
   = if maybe True (<= 0) optMethMin then checkTyDecls tcs tys else false
   where
     tcs = TCS
@@ -170,10 +170,12 @@ checkTyDecls TCS{..} tys@(LetStruct _ann _parBnds Nil _rest)
   = if maybe True (> 0) emptyStrMax then checkTyDecls' tcs' tys else false
   where
     tcs' = TCS{ emptyStrMax = pred <$> emptyStrMax, .. }
-checkTyDecls TCS{..} tys@(LetInterface _ann _parBnds _parents Nil _rest)
+checkTyDecls TCS{..} tys@(LetInterface _ann _parBnds Nil Nil _rest)
   = if maybe True (> 0) emptyIntMax then checkTyDecls' tcs' tys else false
   where
     tcs' = TCS{ emptyIntMax = pred <$> emptyIntMax, .. }
+checkTyDecls TCS{..} (LetInterface _ann _parBnds _parents@(Cons _ _) _methNamesAndSigs@Nil _rest)
+  = false
 checkTyDecls tcs tys = checkTyDecls' tcs tys
 
 
@@ -195,13 +197,13 @@ checkTyDecls' tcs@TCS{..} (LetStruct ann (parBnds :: Vec _ a) fldsAndTys rest)
               $ vall isTyI parBnds && vall (checkType tcs Nil Nil) parBnds
 
     parBnds' :: Vec (Type Z (S ts) ti) a
-    parBnds' = vmap (bimap FS id) parBnds
+    parBnds' = vmap (first FS) parBnds
 
     methSigsI' :: Map (ti, m) (TySig MSig (S ts) ti)
-    methSigsI' = M.map (bimap FS id) methSigsI
+    methSigsI' = M.map (first FS) methSigsI
 
     methSigsS' :: Map (S ts, m) (TySig MSig (S ts) ti)
-    methSigsS' = M.mapKeysMonotonic (bimap FS id) (M.map (bimap FS id) methSigsS)
+    methSigsS' = M.mapKeysMonotonic (first FS) (M.map (first FS) methSigsS)
 
     methSetS' :: S ts -> Set m
     methSetS' FZ      = S.empty
@@ -213,15 +215,15 @@ checkTyDecls' tcs@TCS{..} (LetStruct ann (parBnds :: Vec _ a) fldsAndTys rest)
         newFldSig = M.fromList (vlist (vmap mkFldSig fldsAndTys))
           where
             mkFldSig :: (f, Type a ts ti) -> ((S ts, f), TySig FSig (S ts) ti)
-            mkFldSig (f, fldTy) = ((FZ, f), TySig parBnds' (FSig (bimap FS id fldTy)))
-        oldFldSig = M.mapKeysMonotonic (bimap FS id) (M.map (bimap FS id) fldSig)
+            mkFldSig (f, fldTy) = ((FZ, f), TySig parBnds' (FSig (first FS fldTy)))
+        oldFldSig = M.mapKeysMonotonic (first FS) (M.map (first FS) fldSig)
 
     strSig' :: S ts -> TySig SSig (S ts) ti
-    strSig' FZ      = TySig (vmap (bimap FS id) parBnds) (SSig (vmap (bimap FS id . snd) fldsAndTys))
-    strSig' (FS ts) = bimap FS id (strSig ts)
+    strSig' FZ      = TySig (vmap (first FS) parBnds) (SSig (vmap (first FS . snd) fldsAndTys))
+    strSig' (FS ts) = first FS (strSig ts)
 
     intSig' :: ti -> TySig ISig (S ts) ti
-    intSig' ti = bimap FS id (intSig ti)
+    intSig' ti = first FS (intSig ti)
 
     fldUndef' :: Set f
     fldUndef' = S.difference fldUndef (S.fromList (vlist (vmap fst fldsAndTys)))
@@ -238,7 +240,7 @@ checkTyDecls' tcs@TCS{..} (LetStruct ann (parBnds :: Vec _ a) fldsAndTys rest)
              $ vall (checkType tcs parBnds Nil) (vmap snd fldsAndTys)
 
 checkTyDecls' tcs@TCS{..} (LetInterface ann (parBnds :: Vec _ a) parents methNamesAndSigs rest)
-  = methsUniq &&& parBndsOk &&& parentsOk !&& (methSigsOk &&& checkTyDecls tcs' rest)
+  = methsUniq &&& parBndsOk &&& parentsUniq &&& parentsOk !&& (methSigsOk &&& checkTyDecls tcs' rest)
   where
     methsUniq :: Bool
     methsUniq = warn ann "checkTyDecls'.Interface.methsUniq"
@@ -250,10 +252,17 @@ checkTyDecls' tcs@TCS{..} (LetInterface ann (parBnds :: Vec _ a) parents methNam
 
     parentsOk :: Bool
     parentsOk = warn ann "checkTyDecls'.Interface.parentsOk"
-              $ isJust parentMethSigsI
+              $ vall (checkType tcs parBnds Nil) parents && isJust parentMethSigsI
+
+    parentsUniq :: Bool
+    parentsUniq = warn ann "checkTyDecls.Inferface.parentsUniq"
+                $ isJustTrue (fmap allDifferent . traverse toTyI . vlist $ parents)
+      where
+        isJustTrue (Just True) = True
+        isJustTrue _           = False
 
     parBnds' :: Vec (Type Z ts (S ti)) a
-    parBnds' = vmap (bimap id FS) parBnds
+    parBnds' = vmap (second FS) parBnds
 
     methSigsI' :: Map (S ti, m) (TySig MSig ts (S ti))
     methSigsI' = M.unions [newMethSigsI, oldMethSigsI, fromJust parentMethSigsI]
@@ -261,27 +270,27 @@ checkTyDecls' tcs@TCS{..} (LetInterface ann (parBnds :: Vec _ a) parents methNam
         newMethSigsI = M.fromList (vlist (vmap mkMethSig methNamesAndSigs))
           where
             mkMethSig (m, methSig') = ((FZ, m), TySig parBnds' methSig')
-        oldMethSigsI = M.mapKeysMonotonic (bimap FS id) (M.map (bimap id FS) methSigsI)
+        oldMethSigsI = M.mapKeysMonotonic (first FS) (M.map (second FS) methSigsI)
 
     parentMethSigsI :: Maybe (Map (S ti, m) (TySig MSig ts (S ti)))
     parentMethSigsI = mkParentMethSigI tcs parBnds parents
 
     methSigsS' :: Map (ts, m) (TySig MSig ts (S ti))
-    methSigsS' = M.map (bimap id FS) methSigsS
+    methSigsS' = M.map (second FS) methSigsS
 
     methSetI' :: S ti -> Set m
     methSetI' FZ      = S.fromList (vlist (vmap fst methNamesAndSigs))
     methSetI' (FS ti) = methSetI ti
 
     fldSig' :: Map (ts, f) (TySig FSig ts (S ti))
-    fldSig' = M.map (bimap id FS) fldSig
+    fldSig' = M.map (second FS) fldSig
 
     strSig' :: ts -> TySig SSig ts (S ti)
-    strSig' ts = bimap id FS (strSig ts)
+    strSig' ts = second FS (strSig ts)
 
     intSig' :: S ti -> TySig ISig ts (S ti)
-    intSig' FZ      = TySig (vmap (bimap id FS) parBnds) ISig
-    intSig' (FS ti) = bimap id FS (intSig ti)
+    intSig' FZ      = TySig (vmap (second FS) parBnds) ISig
+    intSig' (FS ti) = second FS (intSig ti)
 
     tcs' :: TCS ts (S ti) f m
     tcs' = TCS methSigsI' methSigsS'
@@ -293,7 +302,7 @@ checkTyDecls' tcs@TCS{..} (LetInterface ann (parBnds :: Vec _ a) parents methNam
     methSigsOk :: Bool
     methSigsOk = vall (checkMSig ann tcs' parBnds') (vmap snd methNamesAndSigs)
 
-checkTyDecls' tcs@TCS{..} (TmDecls ann rest)
+checkTyDecls' tcs@TCS{..} (TmDecls _ann rest)
   | S.null fldUndef = checkTmDecls tcs rest
   | otherwise       = false
 
@@ -404,7 +413,7 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
        -> Cool
 
     -- Case: Variables
-    go ty (Var ann x)
+    go ty (Var _ann x)
       = toCool (ty == tyEnv x)
 
     -- Case: Struct Literals
@@ -441,7 +450,7 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
                        $ vall' (\(arg, argTy) -> go argTy arg) argsAndTys
 
     -- Case: Select
-    go ty (Select ann obj objTy@(Con (TyS ts) tyArgs) f)
+    go ty (Select _ann obj objTy@(Con (TyS ts) tyArgs) f)
       = case M.lookup (ts, f) fldSig of
         Nothing -> false
         Just (TySig parBnds' (FSig fldTy)) ->
@@ -502,10 +511,10 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
               objOk = go objTy obj
 
     -- Case: Type Assertions
-    go ty@(Con (TyI _) _) (Assert ann obj objTy@(Con (TyI _) _) assTy)
+    go ty@(Con (TyI _) _) (Assert _ann obj objTy@(Con (TyI _) _) assTy)
       | ty == assTy = go objTy obj
 
-    go ty@(Con (TyS _) _) (Assert ann obj objTy@(Con (TyI _) _) assTy)
+    go ty@(Con (TyS _) _) (Assert _ann obj objTy@(Con (TyI _) _) assTy)
       | ty == assTy = assTyOk !&& go objTy obj
       where
         assTyOk = implements tcs objParBnds methParBnds assTy objTy
@@ -532,8 +541,13 @@ checkType tcs@TCS{..} objParBnds methParBnds (Con tc tyArgs) =
 
 -- |Check if type is an interface.
 isTyI :: forall a ts ti. Type a ts ti -> Bool
-isTyI (Con (TyI _) _) = True
-isTyI _               = False
+isTyI = isJust . toTyI
+
+
+-- |Return the interface name if type is an interface.
+toTyI :: Type a ts ti -> Maybe ti
+toTyI (Con (TyI ti) _) = Just ti
+toTyI _                = Nothing
 
 
 -- |Check if argument types implement parameter bounds.
@@ -592,7 +606,7 @@ implements tcs@TCS{..} objParBnds methParBnds = go
           -- NOTE: unsafeCoerce above is equivalent to the following expression:
           -- mapPar (inject (vlength methParBnds `plus` vlength objParBnds))
 
-    -- implements <:-interface (TODO: check w/ Phil)
+    -- implements <:-interface
     go (Con tc1 tyArgs1) (Con (TyI ti2) tyArgs2)
       = case vlength tyArgs1 `decEq` vlength tyArgs2 of
         Nothing   -> False
@@ -677,7 +691,7 @@ mkParentMethSigI tcs@TCS{..} parBnds = go1
                      checkParBnds tcs parBnds Nil parBnds' tyArgs'
           where
             methSig'' :: TySig MSig ts (S ti)
-            methSig'' = bimap id FS (TySig parBnds (substMethSig (vlookup tyArgs') methSig'))
+            methSig'' = second FS (TySig parBnds (substMethSig (vlookup tyArgs') methSig'))
 
             onlyIf :: forall a''. a'' -> Bool -> Maybe a''
             onlyIf x True  = Just x
