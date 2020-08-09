@@ -1,0 +1,3082 @@
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ts0() }; type ts1(type a0 ti1()) struct { f0 ts0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ts0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ts0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001e47a6, 0x4, 0xc0001e47a0, 0x3, 0xc00021d240, 0x1, 0x1, 0xc0001e4770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022c4b0, 0x5, 0x5, 0x691120, 0xc000226800, 0x0, 0x0, 0xc000236000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000191c60, 0x7fff6b8cae33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7fff6b8cae33, 0x111, 0x7f918c664f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7fff6b8cae33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ts0() }; type ts1(type a0 ti1()) struct { f0 ti1() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ts0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti1()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001f0796, 0x4, 0xc0001f0790, 0x3, 0xc000229220, 0x1, 0x1, 0xc0001f0760, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002384b0, 0x5, 0x5, 0x691120, 0xc000230800, 0x0, 0x0, 0xc000244000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c40, 0x7ffed6b08e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffed6b08e33, 0x111, 0x7f7b6514ff01, 0xc000122a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffed6b08e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ts0() }; type ts1(type a0 ti1()) struct { f0 ti0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ts0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020c840, 0x0, 0x0, 0xc00021a000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffe99453e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffe99453e33, 0x111, 0x7f6ea73edf01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffe99453e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ts0() }; type ts1(type a0 ti1()) struct { f0 a0 }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ts0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 a0
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ae870, 0x4, 0xc0001ae846, 0x3, 0xc0001f1280, 0x1, 0x1, 0xc0001ae816, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0001fe5a0, 0x5, 0x5, 0x691120, 0xc0001fa880, 0x0, 0x0, 0xc000206000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000163ca0, 0x7ffdd19bbe36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffdd19bbe36, 0x10e, 0x7f0a44144f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffdd19bbe36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts1(type a0 ti1()) struct { f0 ts0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ts0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ae866, 0x4, 0xc0001ae860, 0x3, 0xc0001f1280, 0x1, 0x1, 0xc0001ae830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0001fe500, 0x5, 0x5, 0x691120, 0xc0001f8840, 0x0, 0x0, 0xc000206000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000163ca0, 0x7ffd0cf4be33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd0cf4be33, 0x111, 0x7f3237113f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffd0cf4be33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts1(type a0 ti1()) struct { f0 ti1() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti1()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001e67a6, 0x4, 0xc0001e67a0, 0x3, 0xc00021f240, 0x1, 0x1, 0xc0001e6770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022e4b0, 0x5, 0x5, 0x691120, 0xc000228840, 0x0, 0x0, 0xc000238000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c60, 0x7ffd5a00de33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd5a00de33, 0x111, 0x7f70e0b18f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000140000, 0x7ffd5a00de33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts1(type a0 ti1()) struct { f0 ti0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ae866, 0x4, 0xc0001ae860, 0x3, 0xc0001f1280, 0x1, 0x1, 0xc0001ae830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0001fe500, 0x5, 0x5, 0x691120, 0xc0001f8840, 0x0, 0x0, 0xc000206000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000163ca0, 0x7fff40211e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7fff40211e33, 0x111, 0x7f439d39ff01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000100000, 0x7fff40211e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts1(type a0 ti1()) struct { f0 a0 }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts1(type a0 ti1()) struct {
+  f0 a0
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001f07a0, 0x4, 0xc0001f0776, 0x3, 0xc000229220, 0x1, 0x1, 0xc0001f0746, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000238550, 0x5, 0x5, 0x691120, 0xc000230840, 0x0, 0x0, 0xc000244000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c40, 0x7ffc66c21e36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc66c21e36, 0x10e, 0x7f68dc709f01, 0xc000122a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffc66c21e36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts1(type a0 ti1()) struct { f0 ts0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ts0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ae866, 0x4, 0xc0001ae860, 0x3, 0xc0001f1280, 0x1, 0x1, 0xc0001ae830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0001fe500, 0x5, 0x5, 0x691120, 0xc0001f8840, 0x0, 0x0, 0xc000206000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000163ca0, 0x7ffcfdd6de33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffcfdd6de33, 0x111, 0x7f73c918cf01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffcfdd6de33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts1(type a0 ti1()) struct { f0 ti1() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti1()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ae866, 0x4, 0xc0001ae860, 0x3, 0xc0001f1280, 0x1, 0x1, 0xc0001ae830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0001fe500, 0x5, 0x5, 0x691120, 0xc0001f8840, 0x0, 0x0, 0xc000206000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000163ca0, 0x7ffeacad9e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffeacad9e33, 0x111, 0x7eff05919f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffeacad9e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts1(type a0 ti1()) struct { f0 ti0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020c840, 0x0, 0x0, 0xc00021a000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffc3d772e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc3d772e33, 0x111, 0x7f1ceed9ef01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffc3d772e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts1(type a0 ti1()) struct { f0 a0 }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 a0
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001d2860, 0x4, 0xc0001d2836, 0x3, 0xc000217280, 0x1, 0x1, 0xc0001d2806, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000224550, 0x5, 0x5, 0x691120, 0xc000220840, 0x0, 0x0, 0xc00022c000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000187ca0, 0x7ffce3ef8e36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x413b00, 0x7ffce3ef8e36, 0x10e, 0x7fe131353f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffce3ef8e36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface { m0(type )() ti0() }; type ti1(type ) interface {  }; type ts1(type a0 ti0()) struct { f0 ts0() }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ti1(type ) interface {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 ts0()
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020c840, 0x0, 0x0, 0xc00021a000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffdc202ae33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffdc202ae33, 0x111, 0x7f3278631f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffdc202ae33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface { m0(type )() ti0() }; type ti1(type ) interface {  }; type ts1(type a0 ti0()) struct { f0 ti1() }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ti1(type ) interface {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 ti1()
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001e67a6, 0x4, 0xc0001e67a0, 0x3, 0xc00021f240, 0x1, 0x1, 0xc0001e6770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022e4b0, 0x5, 0x5, 0x691120, 0xc000228840, 0x0, 0x0, 0xc000238000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c60, 0x7ffc972b2e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc972b2e33, 0x111, 0x7f9de72b9f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000140000, 0x7ffc972b2e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface { m0(type )() ti0() }; type ti1(type ) interface {  }; type ts1(type a0 ti0()) struct { f0 ti0() }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ti1(type ) interface {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 ti0()
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020e840, 0x0, 0x0, 0xc00021a000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffc37644e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc37644e33, 0x111, 0x7f1b7fabef01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffc37644e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface { m0(type )() ti0() }; type ti1(type ) interface {  }; type ts1(type a0 ti0()) struct { f0 a0 }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ti1(type ) interface {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 a0
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2870, 0x4, 0xc0001c2846, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2816, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002125a0, 0x5, 0x5, 0x691120, 0xc00020c880, 0x0, 0x0, 0xc00021a000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffc6f9fae36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc6f9fae36, 0x10e, 0x7f27c76d1f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffc6f9fae36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface { m0(type )() ts0() }; type ti1(type ) interface {  }; type ts1(type a0 ti0()) struct { f0 ts0() }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+  m0(type )() ts0()
+};
+type ti1(type ) interface {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 ts0()
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020c840, 0x0, 0x0, 0xc00021a000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7fff813a2e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7fff813a2e33, 0x111, 0x7fa476409f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7fff813a2e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface { m0(type )() ts0() }; type ti1(type ) interface {  }; type ts1(type a0 ti0()) struct { f0 ti1() }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+  m0(type )() ts0()
+};
+type ti1(type ) interface {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 ti1()
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020e840, 0x0, 0x0, 0xc00021a000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffd27fe6e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd27fe6e33, 0x111, 0x7f7faa888f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffd27fe6e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface { m0(type )() ts0() }; type ti1(type ) interface {  }; type ts1(type a0 ti0()) struct { f0 ti0() }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+  m0(type )() ts0()
+};
+type ti1(type ) interface {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 ti0()
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001f0796, 0x4, 0xc0001f0790, 0x3, 0xc000229220, 0x1, 0x1, 0xc0001f0760, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002384b0, 0x5, 0x5, 0x691120, 0xc000230800, 0x0, 0x0, 0xc000244000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c40, 0x7ffd4e782e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd4e782e33, 0x111, 0x7f51385ebf01, 0xc000122a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffd4e782e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface { m0(type )() ts0() }; type ti1(type ) interface {  }; type ts1(type a0 ti0()) struct { f0 a0 }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+  m0(type )() ts0()
+};
+type ti1(type ) interface {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 a0
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2870, 0x4, 0xc0001c2846, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2816, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002125a0, 0x5, 0x5, 0x691120, 0xc00020e880, 0x0, 0x0, 0xc00021a000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffd526e7e36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd526e7e36, 0x10e, 0x7f4538204f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffd526e7e36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface { m0(type )() ts0() }; type ts1(type a0 ti0()) struct { f0 ts0() }; type ti1(type ) interface {  }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+  m0(type )() ts0()
+};
+type ts1(type a0 ti0()) struct {
+  f0 ts0()
+};
+type ti1(type ) interface {
+
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001e47a6, 0x4, 0xc0001e47a0, 0x3, 0xc00021d240, 0x1, 0x1, 0xc0001e4770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022c4b0, 0x5, 0x5, 0x691120, 0xc000226800, 0x0, 0x0, 0xc000236000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000191c60, 0x7ffe3c6c8e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffe3c6c8e33, 0x111, 0x7f3406dfff01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffe3c6c8e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface { m0(type )() ts0() }; type ts1(type a0 ti0()) struct { f0 ti0() }; type ti1(type ) interface {  }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+  m0(type )() ts0()
+};
+type ts1(type a0 ti0()) struct {
+  f0 ti0()
+};
+type ti1(type ) interface {
+
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020e840, 0x0, 0x0, 0xc00021a000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffc659a6e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc659a6e33, 0x111, 0x7fb61dedaf01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffc659a6e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface { m0(type )() ts0() }; type ts1(type a0 ti0()) struct { f0 a0 }; type ti1(type ) interface {  }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+  m0(type )() ts0()
+};
+type ts1(type a0 ti0()) struct {
+  f0 a0
+};
+type ti1(type ) interface {
+
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c4870, 0x4, 0xc0001c4846, 0x3, 0xc000207280, 0x1, 0x1, 0xc0001c4816, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002145a0, 0x5, 0x5, 0x691120, 0xc000210880, 0x0, 0x0, 0xc00021c000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000179ca0, 0x7fff3996ee36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7fff3996ee36, 0x10e, 0x7fe6d6767f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7fff3996ee36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface { m0(type )() ti0() }; type ts1(type a0 ti0()) struct { f0 ts0() }; type ti1(type ) interface {  }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ts1(type a0 ti0()) struct {
+  f0 ts0()
+};
+type ti1(type ) interface {
+
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001f0796, 0x4, 0xc0001f0790, 0x3, 0xc000229220, 0x1, 0x1, 0xc0001f0760, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002384b0, 0x5, 0x5, 0x691120, 0xc000230800, 0x0, 0x0, 0xc000244000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c40, 0x7ffeb64c0e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffeb64c0e33, 0x111, 0x7fe9d72bbf01, 0xc000122a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffeb64c0e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface { m0(type )() ti0() }; type ts1(type a0 ti0()) struct { f0 ti0() }; type ti1(type ) interface {  }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ts1(type a0 ti0()) struct {
+  f0 ti0()
+};
+type ti1(type ) interface {
+
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001e27a6, 0x4, 0xc0001e27a0, 0x3, 0xc00021b240, 0x1, 0x1, 0xc0001e2770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022a4b0, 0x5, 0x5, 0x691120, 0xc000226800, 0x0, 0x0, 0xc000234000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc00018fc60, 0x7fff03685e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7fff03685e33, 0x111, 0x7fc2237aaf01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7fff03685e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ts0(type ) struct {  }; type ti0(type ) interface { m0(type )() ti0() }; type ts1(type a0 ti0()) struct { f0 a0 }; type ti1(type ) interface {  }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ts0(type ) struct {
+
+};
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ts1(type a0 ti0()) struct {
+  f0 a0
+};
+type ti1(type ) interface {
+
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ec7b0, 0x4, 0xc0001ec786, 0x3, 0xc00021d240, 0x1, 0x1, 0xc0001ec756, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022c550, 0x5, 0x5, 0x691120, 0xc000228840, 0x0, 0x0, 0xc000236000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000191c60, 0x7ffca70f3e36, 0x10e, 0x1, 0x403bb1, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffca70f3e36, 0x10e, 0x4aa301, 0x54627f)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffca70f3e36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ts0(type ) struct {  }; type ti1(type ) interface { m0(type )() ts0() }; type ts1(type a0 ti1()) struct { f0 ts0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+  m0(type )() ts0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ts0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020c840, 0x0, 0x0, 0xc00021a000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffd5e816e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd5e816e33, 0x111, 0x7f7160619f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffd5e816e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ts0(type ) struct {  }; type ti1(type ) interface { m0(type )() ts0() }; type ts1(type a0 ti1()) struct { f0 ti1() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+  m0(type )() ts0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti1()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020c840, 0x0, 0x0, 0xc00021a000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffd72a1de33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd72a1de33, 0x111, 0x7fad5cf1ff01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffd72a1de33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ts0(type ) struct {  }; type ti1(type ) interface { m0(type )() ts0() }; type ts1(type a0 ti1()) struct { f0 ti0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+  m0(type )() ts0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ee7a6, 0x4, 0xc0001ee7a0, 0x3, 0xc00021d240, 0x1, 0x1, 0xc0001ee770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022c4b0, 0x5, 0x5, 0x691120, 0xc000226800, 0x0, 0x0, 0xc000236000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000191c60, 0x7ffc0679de33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc0679de33, 0x111, 0x7f533791ef01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffc0679de33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ts0(type ) struct {  }; type ti1(type ) interface { m0(type )() ts0() }; type ts1(type a0 ti1()) struct { f0 a0 }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+  m0(type )() ts0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 a0
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2870, 0x4, 0xc0001c2846, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2816, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002125a0, 0x5, 0x5, 0x691120, 0xc00020c880, 0x0, 0x0, 0xc00021a000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7fff924a1e36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7fff924a1e36, 0x10e, 0x7f38639a4f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7fff924a1e36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ts0(type ) struct {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts1(type a0 ti1()) struct { f0 ts0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ts0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ee7a6, 0x4, 0xc0001ee7a0, 0x3, 0xc00021d240, 0x1, 0x1, 0xc0001ee770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022c4b0, 0x5, 0x5, 0x691120, 0xc000226800, 0x0, 0x0, 0xc000236000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000191c60, 0x7ffda2636e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffda2636e33, 0x111, 0x7fe286116f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffda2636e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ts0(type ) struct {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts1(type a0 ti1()) struct { f0 ti1() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti1()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ae866, 0x4, 0xc0001ae860, 0x3, 0xc0001f1280, 0x1, 0x1, 0xc0001ae830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0001fe500, 0x5, 0x5, 0x691120, 0xc0001f8840, 0x0, 0x0, 0xc000206000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000163ca0, 0x7ffe52636e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffe52636e33, 0x111, 0x7ffa9ccd2f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffe52636e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ts0(type ) struct {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts1(type a0 ti1()) struct { f0 ti0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020c840, 0x0, 0x0, 0xc00021a000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffc66f05e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc66f05e33, 0x111, 0x7f63e39a8f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffc66f05e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ts0(type ) struct {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts1(type a0 ti1()) struct { f0 a0 }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts1(type a0 ti1()) struct {
+  f0 a0
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ee7b0, 0x4, 0xc0001ee786, 0x3, 0xc00021d240, 0x1, 0x1, 0xc0001ee756, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022c550, 0x5, 0x5, 0x691120, 0xc000228840, 0x0, 0x0, 0xc000236000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000191c60, 0x7ffe4f3f8e36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffe4f3f8e36, 0x10e, 0x7fb902214f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffe4f3f8e36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ts0(type ) struct {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts1(type a0 ti1()) struct { f0 ts0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ts0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ee7a6, 0x4, 0xc0001ee7a0, 0x3, 0xc00021d240, 0x1, 0x1, 0xc0001ee770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022c4b0, 0x5, 0x5, 0x691120, 0xc000226800, 0x0, 0x0, 0xc000236000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000191c60, 0x7ffd7ff3ce33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd7ff3ce33, 0x111, 0x7fbf6d075f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffd7ff3ce33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ts0(type ) struct {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts1(type a0 ti1()) struct { f0 ti1() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti1()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc000202796, 0x4, 0xc000202790, 0x3, 0xc000233220, 0x1, 0x1, 0xc000202760, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002424b0, 0x5, 0x5, 0x691120, 0xc00023c800, 0x0, 0x0, 0xc00024e000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc00019dc40, 0x7fffb751de33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7fffb751de33, 0x111, 0x7fa15f6c9f01, 0xc000124a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7fffb751de33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ts0(type ) struct {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts1(type a0 ti1()) struct { f0 ti0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001f8796, 0x4, 0xc0001f8790, 0x3, 0xc000229220, 0x1, 0x1, 0xc0001f8760, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002384b0, 0x5, 0x5, 0x691120, 0xc000230800, 0x0, 0x0, 0xc000244000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c40, 0x7ffd223e0e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd223e0e33, 0x111, 0x7fcbb199bf01, 0xc000122a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffd223e0e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ts0(type ) struct {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts1(type a0 ti1()) struct { f0 a0 }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts1(type a0 ti1()) struct {
+  f0 a0
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001f07b0, 0x4, 0xc0001f0786, 0x3, 0xc00021f240, 0x1, 0x1, 0xc0001f0756, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022e550, 0x5, 0x5, 0x691120, 0xc000228880, 0x0, 0x0, 0xc000238000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c60, 0x7ffc02ae1e36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc02ae1e36, 0x10e, 0x7f67e7ecbf01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000140000, 0x7ffc02ae1e36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts0(type ) struct {  }; type ts1(type a0 ti1()) struct { f0 ts0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti1()) struct {
+  f0 ts0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ee7a6, 0x4, 0xc0001ee7a0, 0x3, 0xc00021d240, 0x1, 0x1, 0xc0001ee770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022c4b0, 0x5, 0x5, 0x691120, 0xc000226800, 0x0, 0x0, 0xc000236000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000191c60, 0x7ffc41b5de33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc41b5de33, 0x111, 0x7f18ca415f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffc41b5de33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts0(type ) struct {  }; type ts1(type a0 ti1()) struct { f0 ti1() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti1()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020c840, 0x0, 0x0, 0xc00021a000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffc4a9bbe33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc4a9bbe33, 0x111, 0x7f6754fc2f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffc4a9bbe33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts0(type ) struct {  }; type ts1(type a0 ti1()) struct { f0 ti0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ae866, 0x4, 0xc0001ae860, 0x3, 0xc0001f1280, 0x1, 0x1, 0xc0001ae830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0001fe500, 0x5, 0x5, 0x691120, 0xc0001fa840, 0x0, 0x0, 0xc000206000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000163ca0, 0x7fffafe95e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7fffafe95e33, 0x111, 0x7fefc072df01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7fffafe95e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts0(type ) struct {  }; type ts1(type a0 ti1()) struct { f0 a0 }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti1()) struct {
+  f0 a0
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2870, 0x4, 0xc0001c2846, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2816, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002125a0, 0x5, 0x5, 0x691120, 0xc00020e880, 0x0, 0x0, 0xc00021a000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7fff74809e36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7fff74809e36, 0x10e, 0x7fccde306f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7fff74809e36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts0(type ) struct {  }; type ts1(type a0 ti1()) struct { f0 ts0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti1()) struct {
+  f0 ts0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc000200796, 0x4, 0xc000200790, 0x3, 0xc000231220, 0x1, 0x1, 0xc000200760, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002404b0, 0x5, 0x5, 0x691120, 0xc00023a800, 0x0, 0x0, 0xc00024c000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc00019bc40, 0x7fff110c4e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7fff110c4e33, 0x111, 0x7f93258b0f01, 0xc000122a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7fff110c4e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts0(type ) struct {  }; type ts1(type a0 ti1()) struct { f0 ti1() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti1()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001f8796, 0x4, 0xc0001f8790, 0x3, 0xc000229220, 0x1, 0x1, 0xc0001f8760, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002384b0, 0x5, 0x5, 0x691120, 0xc000230800, 0x0, 0x0, 0xc000244000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c40, 0x7ffd8bd33e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd8bd33e33, 0x111, 0x7f733f439f01, 0xc000122a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffd8bd33e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts0(type ) struct {  }; type ts1(type a0 ti1()) struct { f0 ti0() }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti1()) struct {
+  f0 ti0()
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc000202796, 0x4, 0xc000202790, 0x3, 0xc000233220, 0x1, 0x1, 0xc000202760, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002424b0, 0x5, 0x5, 0x691120, 0xc00023a800, 0x0, 0x0, 0xc00024e000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc00019dc40, 0x7ffc0cc27e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc0cc27e33, 0x111, 0x7f70e2bf5f01, 0xc000124a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffc0cc27e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts0(type ) struct {  }; type ts1(type a0 ti1()) struct { f0 a0 }; func (this ts1(type a0 ti0())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti1()) struct {
+  f0 a0
+};
+func (this ts1(type a0 ti0())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001d6860, 0x4, 0xc0001d6836, 0x3, 0xc000217260, 0x1, 0x1, 0xc0001d6806, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002265a0, 0x5, 0x5, 0x691120, 0xc000222880, 0x0, 0x0, 0xc00022e000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000185c80, 0x7ffda69f6e36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffda69f6e36, 0x10e, 0x7f9fe803ef01, 0xc000124a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffda69f6e36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts0(type a0 ti1()) struct { f0 ti1() }; type ts1(type ) struct {  }; func (this ts0(type a0 ti0())) m0(type )() ts1() { return ts1(){} }; func main() { _ = ts1(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts0(type a0 ti1()) struct {
+  f0 ti1()
+};
+type ts1(type ) struct {
+
+};
+func (this ts0(type a0 ti0())) m0(type )() ts1() {
+  return ts1(){}
+};
+func main() {
+  _ = ts1(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001f47a6, 0x4, 0xc0001f47a0, 0x3, 0xc000223240, 0x1, 0x1, 0xc0001f4770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002324b0, 0x5, 0x5, 0x691120, 0xc00022e840, 0x0, 0x0, 0xc00023c000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000197c60, 0x7ffcaf2c9e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffcaf2c9e33, 0x111, 0x7fbd6ab39f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000140000, 0x7ffcaf2c9e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts0(type a0 ti1()) struct { f0 ti0() }; type ts1(type ) struct {  }; func (this ts0(type a0 ti0())) m0(type )() ts1() { return ts1(){} }; func main() { _ = ts1(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts0(type a0 ti1()) struct {
+  f0 ti0()
+};
+type ts1(type ) struct {
+
+};
+func (this ts0(type a0 ti0())) m0(type )() ts1() {
+  return ts1(){}
+};
+func main() {
+  _ = ts1(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020c840, 0x0, 0x0, 0xc00021a000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffd6132ee33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd6132ee33, 0x111, 0x7f60944aef01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffd6132ee33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts0(type a0 ti1()) struct { f0 ti1() }; type ts1(type ) struct {  }; func (this ts0(type a0 ti0())) m0(type )() ts1() { return ts1(){} }; func main() { _ = ts1(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type a0 ti1()) struct {
+  f0 ti1()
+};
+type ts1(type ) struct {
+
+};
+func (this ts0(type a0 ti0())) m0(type )() ts1() {
+  return ts1(){}
+};
+func main() {
+  _ = ts1(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ee7a6, 0x4, 0xc0001ee7a0, 0x3, 0xc00021d240, 0x1, 0x1, 0xc0001ee770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022c4b0, 0x5, 0x5, 0x691120, 0xc000226800, 0x0, 0x0, 0xc000236000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000191c60, 0x7ffdfabf3e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffdfabf3e33, 0x111, 0x7fce4bc3ef01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffdfabf3e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti1() }; type ts0(type a0 ti1()) struct { f0 a0 }; type ts1(type ) struct {  }; func (this ts0(type a0 ti0())) m0(type )() ts1() { return ts1(){} }; func main() { _ = ts1(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti1()
+};
+type ts0(type a0 ti1()) struct {
+  f0 a0
+};
+type ts1(type ) struct {
+
+};
+func (this ts0(type a0 ti0())) m0(type )() ts1() {
+  return ts1(){}
+};
+func main() {
+  _ = ts1(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ee7b0, 0x4, 0xc0001ee786, 0x3, 0xc00021d240, 0x1, 0x1, 0xc0001ee756, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022c550, 0x5, 0x5, 0x691120, 0xc000228840, 0x0, 0x0, 0xc000236000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000191c60, 0x7fff07d1fe36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7fff07d1fe36, 0x10e, 0x7f19fe6b1f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7fff07d1fe36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts0(type a0 ti1()) struct { f0 ti0() }; type ts1(type ) struct {  }; func (this ts0(type a0 ti0())) m0(type )() ts1() { return ts1(){} }; func main() { _ = ts1(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type a0 ti1()) struct {
+  f0 ti0()
+};
+type ts1(type ) struct {
+
+};
+func (this ts0(type a0 ti0())) m0(type )() ts1() {
+  return ts1(){}
+};
+func main() {
+  _ = ts1(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ec7a6, 0x4, 0xc0001ec7a0, 0x3, 0xc00021b260, 0x1, 0x1, 0xc0001ec770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022a4b0, 0x5, 0x5, 0x691120, 0xc000224840, 0x0, 0x0, 0xc000234000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc00018fc80, 0x7ffea842fe33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffea842fe33, 0x111, 0x7f405cb40f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000110000, 0x7ffea842fe33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface {  }; type ti1(type ) interface { m0(type )() ti0() }; type ts0(type a0 ti1()) struct { f0 a0 }; type ts1(type ) struct {  }; func (this ts0(type a0 ti0())) m0(type )() ts1() { return ts1(){} }; func main() { _ = ts1(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+
+};
+type ti1(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type a0 ti1()) struct {
+  f0 a0
+};
+type ts1(type ) struct {
+
+};
+func (this ts0(type a0 ti0())) m0(type )() ts1() {
+  return ts1(){}
+};
+func main() {
+  _ = ts1(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti0(), tdecl=a0 ti1()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001f87a0, 0x4, 0xc0001f8776, 0x3, 0xc000229220, 0x1, 0x1, 0xc0001f8746, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000238550, 0x5, 0x5, 0x691120, 0xc000232840, 0x0, 0x0, 0xc000244000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c40, 0x7ffd129c2e36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd129c2e36, 0x10e, 0x7f5a03b10f01, 0xc000122a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffd129c2e36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ts0(type ) struct {  }; type ti1(type ) interface {  }; type ts1(type a0 ti0()) struct { f0 ts0() }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 ts0()
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001fa796, 0x4, 0xc0001fa790, 0x3, 0xc000229220, 0x1, 0x1, 0xc0001fa760, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002384b0, 0x5, 0x5, 0x691120, 0xc000230800, 0x0, 0x0, 0xc000244000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c40, 0x7fff14d2ae33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7fff14d2ae33, 0x111, 0x7f9bb3824f01, 0xc000122a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7fff14d2ae33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ts0(type ) struct {  }; type ti1(type ) interface {  }; type ts1(type a0 ti0()) struct { f0 ti1() }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 ti1()
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020c840, 0x0, 0x0, 0xc000218000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7fff36405e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7fff36405e33, 0x111, 0x7f3634b08f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7fff36405e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ts0(type ) struct {  }; type ti1(type ) interface {  }; type ts1(type a0 ti0()) struct { f0 ti0() }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 ti0()
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020c840, 0x0, 0x0, 0xc000218000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7fffa91cce33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7fffa91cce33, 0x111, 0x7f24ee365f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7fffa91cce33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ts0(type ) struct {  }; type ti1(type ) interface {  }; type ts1(type a0 ti0()) struct { f0 a0 }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type ) struct {
+
+};
+type ti1(type ) interface {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 a0
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2870, 0x4, 0xc0001c2846, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2816, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002125a0, 0x5, 0x5, 0x691120, 0xc00020c880, 0x0, 0x0, 0xc000218000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffd893f5e36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd893f5e36, 0x10e, 0x7f108de6df01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffd893f5e36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ts0(type ) struct {  }; type ts1(type a0 ti0()) struct { f0 ts0() }; type ti1(type ) interface {  }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 ts0()
+};
+type ti1(type ) interface {
+
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ee846, 0x4, 0xc0001ee840, 0x3, 0xc000227260, 0x1, 0x1, 0xc0001ee810, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002364b0, 0x5, 0x5, 0x691120, 0xc000230800, 0x0, 0x0, 0xc00023c000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000197c80, 0x7ffe3635ee33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x400, 0x7ffe3635ee33, 0x111, 0x7f3870df4f01, 0xc000124a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffe3635ee33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ts0(type ) struct {  }; type ts1(type a0 ti0()) struct { f0 ti0() }; type ti1(type ) interface {  }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 ti0()
+};
+type ti1(type ) interface {
+
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001fa796, 0x4, 0xc0001fa790, 0x3, 0xc000229220, 0x1, 0x1, 0xc0001fa760, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002384b0, 0x5, 0x5, 0x691120, 0xc000230800, 0x0, 0x0, 0xc000244000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c40, 0x7ffcae8d6e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffcae8d6e33, 0x111, 0x7fb501e1af01, 0xc000122a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffcae8d6e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ts0(type ) struct {  }; type ts1(type a0 ti0()) struct { f0 a0 }; type ti1(type ) interface {  }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 a0
+};
+type ti1(type ) interface {
+
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2870, 0x4, 0xc0001c2846, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2816, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002125a0, 0x5, 0x5, 0x691120, 0xc00020c880, 0x0, 0x0, 0xc000218000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffc49785e36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc49785e36, 0x10e, 0x7f52d6df6f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffc49785e36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ti1(type ) interface {  }; type ts0(type ) struct {  }; type ts1(type a0 ti0()) struct { f0 ti0() }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ti1(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 ti0()
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2866, 0x4, 0xc0001c2860, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2830, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000212500, 0x5, 0x5, 0x691120, 0xc00020c840, 0x0, 0x0, 0xc000218000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffe5f3efe33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffe5f3efe33, 0x111, 0x7fd3d5bf1f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffe5f3efe33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ti1(type ) interface {  }; type ts0(type ) struct {  }; type ts1(type a0 ti0()) struct { f0 a0 }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ti1(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 a0
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001fa7a0, 0x4, 0xc0001fa776, 0x3, 0xc000229220, 0x1, 0x1, 0xc0001fa746, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc000238550, 0x5, 0x5, 0x691120, 0xc000232840, 0x0, 0x0, 0xc000244000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c40, 0x7ffd8bc6ae36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd8bc6ae36, 0x10e, 0x7fa1cf1aef01, 0xc000122a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffd8bc6ae36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ti1(type ) interface {  }; type ts0(type ) struct {  }; type ts1(type a0 ti0()) struct { f0 ts0() }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ti1(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 ts0()
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ee7a6, 0x4, 0xc0001ee7a0, 0x3, 0xc00021d240, 0x1, 0x1, 0xc0001ee770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022c4b0, 0x5, 0x5, 0x691120, 0xc000226800, 0x0, 0x0, 0xc000236000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000191c60, 0x7ffd609eae33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffd609eae33, 0x111, 0x7f5625721f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffd609eae33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ti1(type ) interface {  }; type ts0(type ) struct {  }; type ts1(type a0 ti0()) struct { f0 ti1() }; func (this ts1(type a0 ti1())) m0(type )() ts0() { return ts0(){} }; func main() { _ = ts0(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ti1(type ) interface {
+
+};
+type ts0(type ) struct {
+
+};
+type ts1(type a0 ti0()) struct {
+  f0 ti1()
+};
+func (this ts1(type a0 ti1())) m0(type )() ts0() {
+  return ts0(){}
+};
+func main() {
+  _ = ts0(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ee7a6, 0x4, 0xc0001ee7a0, 0x3, 0xc00021d240, 0x1, 0x1, 0xc0001ee770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022c4b0, 0x5, 0x5, 0x691120, 0xc000226800, 0x0, 0x0, 0xc000236000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000191c60, 0x7ffe91232e33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffe91232e33, 0x111, 0x7f651b3edf01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffe91232e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ti1(type ) interface {  }; type ts0(type a0 ti0()) struct { f0 ti1() }; type ts1(type ) struct {  }; func (this ts0(type a0 ti1())) m0(type )() ts1() { return ts1(){} }; func main() { _ = ts1(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ti1(type ) interface {
+
+};
+type ts0(type a0 ti0()) struct {
+  f0 ti1()
+};
+type ts1(type ) struct {
+
+};
+func (this ts0(type a0 ti1())) m0(type )() ts1() {
+  return ts1(){}
+};
+func main() {
+  _ = ts1(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001fa796, 0x4, 0xc0001fa790, 0x3, 0xc000229220, 0x1, 0x1, 0xc0001fa760, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002384b0, 0x5, 0x5, 0x691120, 0xc000230800, 0x0, 0x0, 0xc000244000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c40, 0x7ffed019fe33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffed019fe33, 0x111, 0x7ff4ad174f01, 0xc000122a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffed019fe33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ti1(type ) interface {  }; type ts0(type a0 ti0()) struct { f0 ti0() }; type ts1(type ) struct {  }; func (this ts0(type a0 ti1())) m0(type )() ts1() { return ts1(){} }; func main() { _ = ts1(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ti1(type ) interface {
+
+};
+type ts0(type a0 ti0()) struct {
+  f0 ti0()
+};
+type ts1(type ) struct {
+
+};
+func (this ts0(type a0 ti1())) m0(type )() ts1() {
+  return ts1(){}
+};
+func main() {
+  _ = ts1(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001fa796, 0x4, 0xc0001fa790, 0x3, 0xc000229220, 0x1, 0x1, 0xc0001fa760, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002384b0, 0x5, 0x5, 0x691120, 0xc000230800, 0x0, 0x0, 0xc000244000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000193c40, 0x7ffeecf6ce33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffeecf6ce33, 0x111, 0x7fdc64f6ef01, 0xc000122a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffeecf6ce33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ti1(type ) interface {  }; type ts0(type a0 ti0()) struct { f0 a0 }; type ts1(type ) struct {  }; func (this ts0(type a0 ti1())) m0(type )() ts1() { return ts1(){} }; func main() { _ = ts1(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ti1(type ) interface {
+
+};
+type ts0(type a0 ti0()) struct {
+  f0 a0
+};
+type ts1(type ) struct {
+
+};
+func (this ts0(type a0 ti1())) m0(type )() ts1() {
+  return ts1(){}
+};
+func main() {
+  _ = ts1(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2870, 0x4, 0xc0001c2846, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2816, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002125a0, 0x5, 0x5, 0x691120, 0xc00020e880, 0x0, 0x0, 0xc000218000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffc1c289e36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc1c289e36, 0x10e, 0x7f9168bbbf01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffc1c289e36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ts0(type a0 ti0()) struct { f0 a0 }; type ts1(type ) struct {  }; type ti1(type ) interface {  }; func (this ts0(type a0 ti1())) m0(type )() ts1() { return ts1(){} }; func main() { _ = ts1(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type a0 ti0()) struct {
+  f0 a0
+};
+type ts1(type ) struct {
+
+};
+type ti1(type ) interface {
+
+};
+func (this ts0(type a0 ti1())) m0(type )() ts1() {
+  return ts1(){}
+};
+func main() {
+  _ = ts1(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001c2870, 0x4, 0xc0001c2846, 0x3, 0xc000205280, 0x1, 0x1, 0xc0001c2816, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc0002125a0, 0x5, 0x5, 0x691120, 0xc00020e880, 0x0, 0x0, 0xc000218000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000177ca0, 0x7ffc15ac2e36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc15ac2e36, 0x10e, 0x7fdf6d976f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc0000f0000, 0x7ffc15ac2e36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ts0(type a0 ti0()) struct { f0 ti0() }; type ts1(type ) struct {  }; type ti1(type ) interface {  }; func (this ts0(type a0 ti1())) m0(type )() ts1() { return ts1(){} }; func main() { _ = ts1(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type a0 ti0()) struct {
+  f0 ti0()
+};
+type ts1(type ) struct {
+
+};
+type ti1(type ) interface {
+
+};
+func (this ts0(type a0 ti1())) m0(type )() ts1() {
+  return ts1(){}
+};
+func main() {
+  _ = ts1(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ee7a6, 0x4, 0xc0001ee7a0, 0x3, 0xc00021d240, 0x1, 0x1, 0xc0001ee770, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022c4b0, 0x5, 0x5, 0x691120, 0xc000226800, 0x0, 0x0, 0xc000236000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000191c60, 0x7ffcfad5ae33, 0x111, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffcfad5ae33, 0x111, 0x7f97a17a6f01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffcfad5ae33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ts0(type a0 ti0()) struct { f0 a0 }; type ti1(type ) interface {  }; type ts1(type ) struct {  }; func (this ts0(type a0 ti1())) m0(type )() ts1() { return ts1(){} }; func main() { _ = ts1(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type a0 ti0()) struct {
+  f0 a0
+};
+type ti1(type ) interface {
+
+};
+type ts1(type ) struct {
+
+};
+func (this ts0(type a0 ti1())) m0(type )() ts1() {
+  return ts1(){}
+};
+func main() {
+  _ = ts1(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc0001ee7b0, 0x4, 0xc0001ee786, 0x3, 0xc00021d240, 0x1, 0x1, 0xc0001ee756, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00022c550, 0x5, 0x5, 0x691120, 0xc000228840, 0x0, 0x0, 0xc000236000, 0x102)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc000191c60, 0x7ffc0ba2ce36, 0x10e, 0x1, 0x0, 0x0)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x40b100, 0x7ffc0ba2ce36, 0x10e, 0x7f333b2aaf01, 0x400)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7ffc0ba2ce36, 0x10e, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+Command:
+go run github.com/rhu1/fgg -test-monom '-eval=100' -inline 'package main; type ti0(type ) interface { m0(type )() ti0() }; type ts0(type a0 ti0()) struct { f0 ti0() }; type ti1(type ) interface {  }; type ts1(type ) struct {  }; func (this ts0(type a0 ti1())) m0(type )() ts1() { return ts1(){} }; func main() { _ = ts1(){} }'
+Source:
+package main;
+type ti0(type ) interface {
+  m0(type )() ti0()
+};
+type ts0(type a0 ti0()) struct {
+  f0 ti0()
+};
+type ti1(type ) interface {
+
+};
+type ts1(type ) struct {
+
+};
+func (this ts0(type a0 ti1())) m0(type )() ts1() {
+  return ts1(){}
+};
+func main() {
+  _ = ts1(){}
+}
+Output:
+
+Errors:
+panic: Receiver parameter upperbound not a subtype of type decl upperbound:
+	mdecl=a0 ti1(), tdecl=a0 ti0()
+
+goroutine 1 [running]:
+github.com/rhu1/fgg/fgg.MethDecl.Ok(0xc000200796, 0x4, 0xc000200790, 0x3, 0xc00022f220, 0x1, 0x1, 0xc000200760, 0x2, 0x884590, ...)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:214 +0x6d4
+github.com/rhu1/fgg/fgg.FGGProgram.Ok(0xc00023e4b0, 0x5, 0x5, 0x691120, 0xc0002367c0, 0x0, 0x0, 0xc00024a000, 0x105)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/fgg/fgg_decls.go:53 +0x35b
+main.parse(0x63d300, 0x68bc20, 0xc00019bc40, 0x7fff2ca05e33, 0x111, 0x7f5288f5ff01, 0xc0001228c0, 0x413bc8)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:44 +0xd2
+main.NewFGGInterp(0x400, 0x7fff2ca05e33, 0x111, 0x7f5288f5ff01, 0xc000122a70)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/Frontend.go:153 +0x8e
+main.testMonom(0xc000130000, 0x7fff2ca05e33, 0x111, 0x64)
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:186 +0x61
+main.main()
+	/afs/inf.ed.ac.uk/user/s16/s1638847/go/src/github.com/rhu1/fgg/main.go:142 +0x318
+exit status 2
+
+
+543945.06user 987343.37system 18:20:03elapsed 2319%CPU (0avgtext+0avgdata 364340maxresident)k
+0inputs+7546282008outputs (432646major+21271507155minor)pagefaults 0swaps

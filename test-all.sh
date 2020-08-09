@@ -1,2 +1,2 @@
 #!/bin/sh
-stack run 2> errors.log
+nice -n 10 time stack run -- --max-depth=15 --batch-size=100 2> errors.log
