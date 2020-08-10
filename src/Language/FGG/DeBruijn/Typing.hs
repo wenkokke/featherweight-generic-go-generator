@@ -343,7 +343,7 @@ checkTmDecls tcs@TCS{..}
 
     objParBndsOk :: Bool
     objParBndsOk = warn ann "checkTmDecls.objParBndsOk"
-                 $ vall isTyI objParBnds && vall (checkType tcs Nil Nil) objParBnds
+                 $ vall isTyI objParBnds -- && vall (checkType tcs Nil Nil) objParBnds
 
     methParBndsOk :: Bool
     methParBndsOk = warn ann "checkTmDecls.methParBndsOk"
@@ -550,7 +550,7 @@ toTyI (Con (TyI ti) _) = Just ti
 toTyI _                = Nothing
 
 
--- |Check if argument types implement parameter bounds.
+-- |Check if type arguments implement parameter bounds.
 checkParBnds :: forall a' a ts ti f m n.
                 (Fin (a' :+ a), Fin ts , Fin ti, Ord m)
              => TCS ts ti f m
@@ -559,8 +559,8 @@ checkParBnds :: forall a' a ts ti f m n.
              -> Vec (Type Z ts ti) n
              -> Vec (Type (a' :+ a) ts ti) n
              -> Bool
-checkParBnds tcs objParBnds methParBnds parBnds tys
-  = checkParBnds' tcs objParBnds methParBnds (unsafeCoerce parBnds) tys
+checkParBnds tcs objParBnds methParBnds parBnds tyArgs
+  = checkParBnds' tcs objParBnds methParBnds (unsafeCoerce parBnds) tyArgs
 
 
 -- |Check if argument types implement parameter bounds.
@@ -572,8 +572,8 @@ checkParBnds' :: forall a' a ts ti f m n.
              -> Vec (Type (a' :+ a) ts ti) n
              -> Vec (Type (a' :+ a) ts ti) n
              -> Bool
-checkParBnds' tcs objParBnds methParBnds parBnds tys
-  = vand (vzip (implements tcs objParBnds methParBnds) parBnds tys)
+checkParBnds' tcs objParBnds methParBnds parBnds tyArgs
+  = vand (vzip (implements tcs objParBnds methParBnds) tyArgs parBnds)
 
 
 -- |Check whether one type implements another.
