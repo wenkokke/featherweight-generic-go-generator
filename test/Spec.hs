@@ -1,20 +1,39 @@
-import Data.Coolean (toBool)
+{-# OPTIONS_GHC -fno-warn-unused-top-binds #-}
+
+import qualified Data.Coolean as NEAT
+import Data.Text (Text)
 import qualified Data.Text.IO as T
 import Language.FGG.Common
+  ( TyCon(..)
+  , S(..)
+  , Vec(..))
 import Language.FGG.DeBruijn
+  ( Prog(..)
+  , FDecls(..)
+  , MDecls(..)
+  , TyDecls(..)
+  , TmDecls(..)
+  , Expr(..)
+  , Type(..)
+  , MSig(..))
 import qualified Language.FGG.Named as N
+import qualified Language.FGG.DeBruijn as DB
 import System.Exit (exitSuccess,exitFailure)
 
-
 main :: IO ()
-main | checkBools = exitSuccess
-     | otherwise  = exitFailure
+main = T.putStrLn $ showProg bug2
 
--- * Bools example from the paper
+exitWith :: Bool -> IO ()
+exitWith True  = exitSuccess
+exitWith False = exitFailure
 
-checkBools :: Bool
-checkBools = toBool (checkProg bools)
+checkProg :: Show ann => Prog ann -> Bool
+checkProg = NEAT.toBool . DB.checkProg
 
+showProg :: Show ann => Prog ann -> Text
+showProg = N.prettyProg . DB.convProg
+
+-- Bools example from the paper
 bools :: Prog Int
 bools
   = FDecls 1
@@ -67,11 +86,7 @@ bools
 
 
 
--- * Bug found during the first test run
-
-printBug1 :: IO ()
-printBug1 = T.putStrLn $ N.prettyProg (convProg bug1)
-
+-- Bug #1 in printing of type parameters
 bug1 :: Prog Int
 bug1
   = FDecls 1
@@ -110,3 +125,46 @@ bug1
   $ Main 14
     (Con {-PAY-} (TyS (FS FZ)) Nil)
     (Struct {-PAY-} 15 (FS FZ) Nil Nil)
+
+
+-- Bug #2 in implements relation?
+bug2 :: Prog Int
+bug2
+  = FDecls 1
+  $ NewF {-PAY-} 2
+  $ MDecls 3
+  $ NewM {-PAY-} 4
+  $ TyDecls 5
+
+  $ LetStruct {-PAY-} 6
+    Nil
+    Nil
+
+  $ LetInterface {-PAY-} 7
+    Nil
+    Nil
+    Nil
+
+  $ LetInterface {-PAY-} 8
+    Nil
+    Nil
+    (Cons (FZ, MSig Nil (TyI FZ) Nil (Con {-PAY-} (TyS FZ) Nil)) Nil)
+
+  $ LetStruct {-PAY-} 9
+    (Cons (Con {-PAY-} (TyI FZ) Nil) Nil)
+    (Cons (FZ, Con {-PAY-} (TyS FZ) Nil) Nil)
+
+  $ TmDecls 10
+
+  $ LetMethod {-PAY-} 11
+    (Cons (Con {-PAY-} (TyI (FS FZ)) Nil) Nil)
+    FZ
+    FZ
+    Nil
+    Nil
+    (Con {-PAY-} (TyS (FS FZ)) Nil)
+    (Struct {-PAY-} 12 (FS FZ) Nil Nil)
+
+  $ Main 13
+    (Con {-PAY-} (TyS (FS FZ)) Nil)
+    (Struct {-PAY-} 14 (FS FZ) Nil Nil)
