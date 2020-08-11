@@ -1,8 +1,9 @@
 {-# OPTIONS_GHC -fno-warn-unused-top-binds #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 import qualified Data.Coolean as NEAT
 import Data.Text (Text)
-import qualified Data.Text.IO as T
+import qualified Data.Text as T
 import Language.FGG.Common
   ( TyCon(..)
   , S(..)
@@ -18,29 +19,33 @@ import Language.FGG.DeBruijn
   , MSig(..))
 import qualified Language.FGG.Named as N
 import qualified Language.FGG.DeBruijn as DB
-import Language.FGG.DeBruijn.Size
-import System.Exit (exitSuccess,exitFailure)
-import Text.Printf
+import Test.HUnit
 
 main :: IO ()
-main = do
-  testEx21
-  testBug2
+main = runTestTT tests >> return ()
 
-exitWith :: Bool -> IO ()
-exitWith True  = exitSuccess
-exitWith False = exitFailure
+tests :: Test
+tests = TestList
+  [ checkProg bool ~? "Rejected well-typed program 'bools'"
+  , ex1Src ~=? showProg ex1
+  , not (checkProg ex2a) ~? "Accepted ill-typed program 'ex2a'"
+  , checkProg ex2b ~? "Rejected well-typed program 'ex2b'"
+  , not (checkProg ex3) ~? "Accepted ill-typed program 'ex3'"
+  ]
+
+instance Show (Prog ann) where
+  show = T.unpack . showProg
 
 checkProg :: Show ann => Prog ann -> Bool
 checkProg = NEAT.toBool . DB.checkProg
 
-showProg :: Show ann => Prog ann -> Text
+showProg :: Prog ann -> Text
 showProg = N.prettyProg . DB.convProg
 
 
--- Bools example from the paper
-bools :: Prog Int
-bools
+-- Bool example from the paper
+bool :: Prog Int
+bool
   = FDecls 1
   $ MDecls 2
   $ NewM {-PAY-} 3
@@ -91,8 +96,8 @@ bools
 
 
 -- Bug #1 in printing of type parameters
-bug1 :: Prog Int
-bug1
+ex1 :: Prog Int
+ex1
   = FDecls 1
   $ NewF {-PAY-} 2
   $ MDecls 3
@@ -131,9 +136,33 @@ bug1
     (Struct {-PAY-} 15 (FS FZ) Nil Nil)
 
 
+ex1Src :: Text
+ex1Src = T.intercalate "\n"
+  [ "package main;"
+  , "type ts0(type ) struct {"
+  , ""
+  , "};"
+  , "type ts1(type ) struct {"
+  , ""
+  , "};"
+  , "type ti0(type ) interface {"
+  , ""
+  , "};"
+  , "type ts2(type ) struct {"
+  , "  f0 ts1()"
+  , "};"
+  , "func (this ts2(type )) m0(type a0 ti0())(x0 a0) ts2() {"
+  , "  return x0"
+  , "};"
+  , "func main() {"
+  , "  _ = ts1(){}"
+  , "}"
+  ]
+
+
 -- Bug #2 in implements relation?
-bug2 :: Prog Int
-bug2
+ex2a :: Prog Int
+ex2a
   = FDecls 1
   $ MDecls 2
   $ NewM {-PAY-} 3
@@ -172,9 +201,8 @@ bug2
     (Con {-PAY-} (TyS (FS FZ)) Nil)
     (Struct {-PAY-} 13 (FS FZ) Nil Nil)
 
--- Example #2.1
-ex21 :: Prog Int
-ex21
+ex2b :: Prog Int
+ex2b
   = FDecls 1
   $ MDecls 2
   $ NewM {-PAY-} 3
@@ -213,21 +241,39 @@ ex21
     (Con {-PAY-} (TyS (FS FZ)) Nil)
     (Struct {-PAY-} 13 (FS FZ) Nil Nil)
 
+-- Bug #3
+ex3 :: Prog Int
+ex3
+  = FDecls 1
+  $ NewF {-PAY-} 2
+  $ MDecls 3
+  $ NewM {-PAY-} 4
+  $ TyDecls 5
 
-testBug2 :: IO ()
-testBug2
-  | checkProg bug2 = do
-      printf "FAILED: ill-typed program passed the type checker:\n"
-      T.putStrLn $ showProg bug2
-      printf "(Size %d)\n" (size bug2)
-      exitFailure
-  | otherwise = exitSuccess
+    -- type ts0(type ) struct {};
+  $ LetStruct {-PAY-} 6 Nil Nil
 
-testEx21 :: IO ()
-testEx21
-  | not (checkProg ex21) = do
-      printf "FAILED: well-typed program failed to pass the type checker:\n"
-      T.putStrLn $ showProg ex21
-      printf "(Size %d)\n" (size bug2)
-      exitFailure
-  | otherwise = exitSuccess
+    -- type ti0(type ) interface {};
+  $ LetInterface {-PAY-} 7 Nil Nil Nil
+
+    -- type ts2(type ) struct {f0 ts0()};
+  $ LetStruct {-PAY-} 8
+    Nil
+    (Cons (FZ, (Con {-PAY-} (TyS FZ) Nil)) Nil)
+
+  $ TmDecls {-PAY-} 9
+
+    -- func (this ts2(type )) m0(type )(x0 ti0()) ts2() {return ts2(){x0}};
+  $ LetMethod {-PAY-} 10
+    Nil
+    FZ
+    FZ
+    Nil
+    (Cons (Con {-PAY-} (TyI FZ) Nil) Nil)
+    (Con {-PAY-} (TyS FZ) Nil)
+    (Struct {-PAY-} 10 FZ Nil (Cons (Var {-PAY-} 11 (FS FZ), Con {-PAY-} (TyI FZ) Nil) Nil))
+
+    -- func main() {_ = ts0(){}}
+  $ Main {-PAY-} 12
+    (Con {-PAY-} (TyS (FS FZ)) Nil)
+    (Struct {-PAY-} 13 (FS FZ) Nil Nil)

@@ -1,4 +1,6 @@
-{-# OPTIONS -fno-warn-partial-type-signatures #-}
+{-# OPTIONS_GHC -fno-warn-partial-type-signatures #-}
+{-# OPTIONS_GHC -fno-warn-orphans #-}
+
 {-# LANGUAGE AllowAmbiguousTypes   #-}
 {-# LANGUAGE EmptyDataDeriving     #-}
 {-# LANGUAGE FlexibleInstances     #-}
@@ -58,8 +60,8 @@ data TCS ts ti f m = (Fin ts, Fin ti, Fin f, Fin m) => TCS
   }
 
 data TCSOpts = TCSOpts
-  { optMethMin   :: Maybe Int -- ^ Minimum number of methods
-  , optFldMin    :: Maybe Int -- ^ Minimum number of fields
+  { optMethMin     :: Maybe Int -- ^ Minimum number of methods
+  , optFldMin      :: Maybe Int -- ^ Minimum number of fields
   , optEmptyStrMax :: Maybe Int -- ^ Maximum number of empty structs
   , optEmptyIntMax :: Maybe Int -- ^ Maximum number of empty interfaces
   }
@@ -419,9 +421,9 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
     -- Case: Struct Literals
     go ty (Struct ann ts tyArgs (argsAndTys :: Vec _ n2))
       = case strSig ts of
-        TySig parBnds (SSig argTys) ->
-          case ( vlength parBnds `decEq` vlength tyArgs
-               , vlength argTys  `decEq` vlength argsAndTys
+        TySig parBnds (SSig argTyBnds) ->
+          case ( vlength parBnds   `decEq` vlength tyArgs
+               , vlength argTyBnds `decEq` vlength argsAndTys
                ) of
           (Nothing, _) -> false
           (_, Nothing) -> false
@@ -436,14 +438,14 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
               -- Is each type parameter within the expected bounds?
               tyArgsOk = warn ann "checkExpr.Struct.tyArgsOk"
                        $ vall (checkType tcs objParBnds methParBnds) tyArgs
-                      && checkParBnds tcs objParBnds methParBnds parBnds tyArgs
+                      && checkParBnds tcs objParBnds methParBnds tyArgs parBnds
 
               -- Is each argument type within the expected bounds?
               argTysOk = warn ann "checkExpr.Struct.argTysOk"
-                       $ checkParBnds' tcs objParBnds methParBnds tys argTys'
+                       $ checkParBnds' tcs objParBnds methParBnds tys argTyBnds'
                 where
-                  tys     = vmap snd argsAndTys
-                  argTys' = vmap (substType (vlookup tyArgs)) argTys
+                  tys        = vmap snd argsAndTys
+                  argTyBnds' = vmap (substType (vlookup tyArgs)) argTyBnds
 
               -- Is each argument well-typed?
               argsOk   = warn ann "checkExpr.Struct.argsOk"
@@ -463,7 +465,7 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
               tyOk = ty == substType (vlookup tyArgs) fldTy
               -- Is each type parameter within the expected bounds?
               tyArgsOk = vall (checkType tcs objParBnds methParBnds) tyArgs
-                      && checkParBnds tcs objParBnds methParBnds parBnds' tyArgs
+                      && checkParBnds tcs objParBnds methParBnds tyArgs parBnds'
               -- Is the object well-typed?
               objTyOk  = go objTy obj
 
@@ -493,9 +495,9 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
                       $ ty == substType s retTy
               -- Is each type argument within the expected bounds?
               objTyArgsOk  = warn ann "checkExpr.Call.objTyArgsOk"
-                           $ checkParBnds tcs objParBnds methParBnds objParBnds' objTyArgs
+                           $ checkParBnds tcs objParBnds methParBnds objTyArgs objParBnds'
               methTyArgsOk = warn ann "checkExpr.Call.methTyArgsOk"
-                           $ checkParBnds' tcs objParBnds methParBnds methParBnds'' methTyArgs
+                           $ checkParBnds' tcs objParBnds methParBnds methTyArgs methParBnds''
                 where
                   methParBnds'' :: Vec (Type (a' :+ a) ts ti) a2
                   methParBnds'' = vmap (substType (vlookup objTyArgs)) methParBnds'
@@ -535,7 +537,7 @@ checkType tcs@TCS{..} objParBnds methParBnds (Con tc tyArgs) =
   tyParBnds tcs tc $ \parBnds ->
     case vlength tyArgs `decEq` vlength parBnds of
       Nothing   -> False
-      Just Refl -> checkParBnds tcs objParBnds methParBnds parBnds tyArgs
+      Just Refl -> checkParBnds tcs objParBnds methParBnds tyArgs parBnds
                 && vall (checkType tcs objParBnds methParBnds) tyArgs
 
 
@@ -556,11 +558,11 @@ checkParBnds :: forall a' a ts ti f m n.
              => TCS ts ti f m
              -> Vec (Type Z ts ti) a
              -> Vec (Type a ts ti) a'
-             -> Vec (Type Z ts ti) n
              -> Vec (Type (a' :+ a) ts ti) n
+             -> Vec (Type Z ts ti) n
              -> Bool
-checkParBnds tcs objParBnds methParBnds parBnds tyArgs
-  = checkParBnds' tcs objParBnds methParBnds (unsafeCoerce parBnds) tyArgs
+checkParBnds tcs objParBnds methParBnds tyArgs parBnds
+  = checkParBnds' tcs objParBnds methParBnds tyArgs (unsafeCoerce parBnds)
 
 
 -- |Check if argument types implement parameter bounds.
@@ -572,7 +574,7 @@ checkParBnds' :: forall a' a ts ti f m n.
              -> Vec (Type (a' :+ a) ts ti) n
              -> Vec (Type (a' :+ a) ts ti) n
              -> Bool
-checkParBnds' tcs objParBnds methParBnds parBnds tyArgs
+checkParBnds' tcs objParBnds methParBnds tyArgs parBnds
   = vand (vzip (implements tcs objParBnds methParBnds) tyArgs parBnds)
 
 
@@ -688,7 +690,7 @@ mkParentMethSigI tcs@TCS{..} parBnds = go1
         Nothing   -> Nothing
         Just Refl -> M.singleton (FZ, m) methSig''
                      `onlyIf`
-                     checkParBnds tcs parBnds Nil parBnds' tyArgs'
+                     checkParBnds tcs parBnds Nil tyArgs' parBnds'
           where
             methSig'' :: TySig MSig ts (S ti)
             methSig'' = second FS (TySig parBnds (substMethSig (vlookup tyArgs') methSig'))
