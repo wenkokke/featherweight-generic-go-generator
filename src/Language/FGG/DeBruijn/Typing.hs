@@ -514,12 +514,15 @@ checkExpr tcs@TCS{..} objParBnds methParBnds tyEnv = go
 
     -- Case: Type Assertions
     go ty@(Con (TyI _) _) (Assert _ann obj objTy@(Con (TyI _) _) assTy)
-      | ty == assTy = go objTy obj
+      | ty == assTy = assTyOk !&& go objTy obj
+      where
+        assTyOk = checkType tcs objParBnds methParBnds assTy
 
     go ty@(Con (TyS _) _) (Assert _ann obj objTy@(Con (TyI _) _) assTy)
       | ty == assTy = assTyOk !&& go objTy obj
       where
-        assTyOk = implements tcs objParBnds methParBnds assTy objTy
+        assTyOk = checkType tcs objParBnds methParBnds assTy
+              !&& implements tcs objParBnds methParBnds assTy objTy
 
     go _ _ = false
 

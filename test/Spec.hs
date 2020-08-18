@@ -1,6 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-unused-top-binds #-}
+{-# OPTIONS_GHC -fno-warn-orphans #-}
 {-# LANGUAGE OverloadedStrings #-}
 
+import Control.Monad (void)
 import qualified Data.Coolean as NEAT
 import Data.Text (Text)
 import qualified Data.Text as T
@@ -22,15 +24,16 @@ import qualified Language.FGG.DeBruijn as DB
 import Test.HUnit
 
 main :: IO ()
-main = runTestTT tests >> return ()
+main = void (runTestTT tests)
 
 tests :: Test
 tests = TestList
-  [ checkProg bool ~? "Rejected well-typed program 'bools'"
+  [ checkProg bool          ~? "Rejected well-typed program 'bools'"
   , ex1Src ~=? showProg ex1
-  , not (checkProg ex2a) ~? "Accepted ill-typed program 'ex2a'"
-  , checkProg ex2b ~? "Rejected well-typed program 'ex2b'"
-  , not (checkProg ex3) ~? "Accepted ill-typed program 'ex3'"
+  , not (checkProg ex2a)    ~? "Accepted ill-typed program 'ex2a'"
+  ,      checkProg ex2b     ~? "Rejected well-typed program 'ex2b'"
+  , not (checkProg ex3)     ~? "Accepted ill-typed program 'ex3'"
+  , not (checkProg ex4)     ~? "Accepted ill-typed program 'ex4'"
   ]
 
 instance Show (Prog ann) where
@@ -259,7 +262,7 @@ ex3
     -- type ts2(type ) struct {f0 ts0()};
   $ LetStruct {-PAY-} 8
     Nil
-    (Cons (FZ, (Con {-PAY-} (TyS FZ) Nil)) Nil)
+    (Cons (FZ, Con {-PAY-} (TyS FZ) Nil) Nil)
 
   $ TmDecls {-PAY-} 9
 
@@ -277,3 +280,25 @@ ex3
   $ Main {-PAY-} 12
     (Con {-PAY-} (TyS (FS FZ)) Nil)
     (Struct {-PAY-} 13 (FS FZ) Nil Nil)
+
+-- Bug #4
+ex4 :: Prog Int
+ex4
+  = FDecls {-PAY-} 1
+  $ MDecls {-PAY-} 2
+  $ TyDecls {-PAY-} 3
+
+    -- type ts0(type ) struct {};
+  $ LetStruct {-PAY-} 4 Nil Nil
+    -- type ts1(type ) struct {};
+  $ LetStruct {-PAY-} 5 Nil Nil
+
+  $ TmDecls {-PAY-} 6
+
+    -- func main() {_ = ts0(){}.(ts1()) }
+  $ Main {-PAY-} 7
+    (Con {-PAY-} (TyS FZ) Nil)
+    (Assert {-PAY-}  8
+      (Struct {-PAY-} 9 (FS FZ) Nil Nil)
+      (Con {-PAY-} (TyS (FS FZ)) Nil)    -- Expression type
+      (Con {-PAY-} (TyS FZ) Nil))        -- Asserted type

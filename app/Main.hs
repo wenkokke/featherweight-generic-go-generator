@@ -15,6 +15,7 @@ import qualified Data.Text as T
 import qualified Data.Text.IO as T
 import Data.Maybe (catMaybes)
 import GHC.Conc (getNumProcessors)
+import Language.FGG.DeBruijn (TCSOpts(..))
 import qualified Language.FGG.DeBruijn.Size as DB
 import qualified Language.FGG.DeBruijn as DB
 import qualified Language.FGG.Named as N
@@ -46,8 +47,9 @@ data Options = Options
   , goArgs       :: [String]
   , inline       :: Bool
   , verbosity    :: Verbosity
+  , tcsOpts      :: TCSOpts
   , showHelp     :: Bool
-  } deriving Show
+  }
 
 defaultOptions :: Options
 defaultOptions = Options
@@ -59,7 +61,16 @@ defaultOptions = Options
   , goArgs       = ["run", "github.com/rhu1/fgg", "-test-monom"]
   , inline       = True
   , verbosity    = Quiet
+  , tcsOpts      = defaultTCSOpts
   , showHelp     = False
+  }
+
+defaultTCSOpts :: TCSOpts
+defaultTCSOpts = TCSOpts
+  { optMethMin     = Just 1
+  , optFldMin      = Just 1
+  , optEmptyStrMax = Just 2
+  , optEmptyIntMax = Just 1
   }
 
 options :: [OptDescr (Options -> Options)]
@@ -91,6 +102,18 @@ options =
   , Option ['V'] []
     (NoArg (\opts -> opts { verbosity = StepByStep }))
     "As above, but also pass '-v' to go-cmd."
+  , Option [] ["min-method"]
+    (ReqArg (\arg opts@Options{..} -> opts { tcsOpts = tcsOpts { optMethMin = read arg }}) "NUM")
+    "Minimum number of methods in each program."
+  , Option [] ["min-field"]
+    (ReqArg (\arg opts@Options{..} -> opts { tcsOpts = tcsOpts { optFldMin = read arg }}) "NUM")
+    "Minimum number of fields in each program."
+  , Option [] ["max-empty-struct"]
+    (ReqArg (\arg opts@Options{..} -> opts { tcsOpts = tcsOpts { optEmptyStrMax = read arg }}) "NUM")
+    "Maximum number of empty struct declarations."
+  , Option [] ["max-empty-interface"]
+    (ReqArg (\arg opts@Options{..} -> opts { tcsOpts = tcsOpts { optEmptyIntMax = read arg }}) "NUM")
+    "Maximum number of empty interface declarations."
   , Option ['h'] ["help"]
     (NoArg (\opts -> opts { showHelp = True }))
     "Show this help."
@@ -143,16 +166,6 @@ test_monomCommute opts@Options{..} prog = do
              ExitSuccess -> if verbosity >= Source then Just (Msg Debug txt) else Nothing
              _           -> Just (Msg Error txt)
 
-wellTypedProgs :: Int -> IO [DB.Prog ()]
-wellTypedProgs depth = NEAT.search' NEAT.O depth (DB.checkProg' opts)
-  where
-    opts = DB.TCSOpts
-      { DB.optMethMin     = Just 1
-      , DB.optFldMin      = Just 1
-      , DB.optEmptyStrMax = Just 2
-      , DB.optEmptyIntMax = Just 1
-      }
-
 usageHeader :: String
 usageHeader = "Usage: fgg-gen [OPTION...]\n"
 
@@ -180,8 +193,13 @@ main = do
   numProcessors <- maybe getNumProcessors return numProcesses
   printf "Using %d processes\n" numProcessors
 
+  -- List of well-typed programs
+  let
+    wellTypedProgs :: IO [DB.Prog ()]
+    wellTypedProgs = NEAT.search' NEAT.O maxDepth (DB.checkProg' tcsOpts)
+
   -- Divvy the well-typed programs up into batches
-  batches <- chunksOf batchSize <$> wellTypedProgs maxDepth
+  batches <- chunksOf batchSize <$> wellTypedProgs
   forM_ (zip [1 :: Int ..] batches) $ \(batchNum, batch) -> do
 
     -- Print batch description
